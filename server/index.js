@@ -1,7 +1,16 @@
 require('dotenv/config');
+const pg = require('pg');
 const path = require('path');
 const express = require('express');
 const errorMiddleware = require('./error-middleware');
+const uploadsMiddleware = require('./uploads-middleware');
+
+const db = new pg.Pool({
+  connectionString: process.env.DATABASE_URL,
+  ssl: {
+    rejectUnauthorized: false
+  }
+});
 
 const app = express();
 const publicPath = path.join(__dirname, 'public');
@@ -15,6 +24,33 @@ app.use(express.static(publicPath));
 app.get('/api/hello', (req, res) => {
   res.json({ hello: 'world' });
 });
+
+app.post('/api/createPost', uploadsMiddleware, (req, res, next) => {
+  const { userId, caption, tags } = req.body;
+  if (!userId) {
+  //   throw new ClientError(400, 'userId is a required field');
+  // } else if (!caption) {
+  //   throw new ClientError(400, 'caption is a required field');
+  // } else if (!tags) {
+  //   throw new ClientError(400, 'tags is a required field');
+  // } else {
+
+    const newURL = `/images/${req.file.filename}`;
+    const sql = `
+      insert into "posts" ("userId", "caption", "imageUrl", "tags")
+        select "userId", $1, $2, $3 from "users"
+        returning *;
+    `;
+    const params = [caption, newURL, tags];
+    return db.query(sql, params)
+      .then(result => {
+        const [post] = result.rows;
+        res.json(post);
+      })
+      .catch(err => next(err));
+  }
+}
+);
 
 app.use(errorMiddleware);
 

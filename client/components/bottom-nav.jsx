@@ -7,17 +7,17 @@ class BottomNav extends React.Component {
         <ul className='d-flex list-unstyled container-fluid justify-content-around align-items-center'>
           <li>
             <a className="navbar-brand" href="#">
-              <i className="fa-solid fa-house fa-1x"></i>
+              <i className="fa-solid fa-house fa-lg"></i>
             </a>
           </li>
           <li>
             <a className="navbar-brand" href="#">
-              <i className="fa-solid fa-circle-plus text-info fa-1x"></i>
+              <i className="fa-solid fa-circle-plus text-info fa-lg"></i>
             </a>
           </li>
           <li>
             <a className="navbar-brand" href="#">
-              <i className="fa-regular fa-user text-info fa-1x"></i>
+              <i className="fa-regular fa-user text-info fa-lg"></i>
             </a>
           </li>
         </ul>

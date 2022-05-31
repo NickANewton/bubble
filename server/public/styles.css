@@ -1,0 +1,27 @@
+body {
+  background-color: #f5fdff;
+  font-family: Lato, sans-serif;
+  font-weight: 400;
+}
+
+.bubble {
+  height: 18.75rem;
+  width: 18.75rem;
+  border-radius: 50%;
+  background-color: transparent;
+  box-shadow:
+    0 20px 30px rgba(0, 0, 0, 0.2),
+    inset 0 1px 5px white,
+    inset 10px 10px 25px rgb(174, 156, 251),
+    inset 0 10px 10px rgb(229, 205, 253),
+    inset 0 -5px 30px rgb(9, 202, 240);
+}
+
+h1 {
+  font-family: "Bubblegum Sans", cursive;
+}
+
+/* font-family: 'ABeeZee', sans-serif;
+font-family: 'Bubblegum Sans', cursive;
+font-family: 'Lato', sans-serif;
+*/

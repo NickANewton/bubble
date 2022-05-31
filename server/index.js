@@ -4,6 +4,7 @@ const path = require('path');
 const express = require('express');
 const errorMiddleware = require('./error-middleware');
 const uploadsMiddleware = require('./uploads-middleware');
+const ClientError = require('./client-error');
 
 const db = new pg.Pool({
   connectionString: process.env.DATABASE_URL,
@@ -26,14 +27,12 @@ app.get('/api/hello', (req, res) => {
 });
 
 app.post('/api/createPost', uploadsMiddleware, (req, res, next) => {
-  const { userId, caption, tags } = req.body;
-  if (!userId) {
-  //   throw new ClientError(400, 'userId is a required field');
-  // } else if (!caption) {
-  //   throw new ClientError(400, 'caption is a required field');
-  // } else if (!tags) {
-  //   throw new ClientError(400, 'tags is a required field');
-  // } else {
+  const { caption, tags } = req.body;
+  if (!caption) {
+    throw new ClientError(400, 'caption is a required field');
+  } else if (!tags) {
+    throw new ClientError(400, 'tags is a required field');
+  } else {
 
     const newURL = `/images/${req.file.filename}`;
     const sql = `

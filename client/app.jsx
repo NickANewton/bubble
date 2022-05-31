@@ -1,8 +1,12 @@
 import React from 'react';
-import Home from './pages/home';
+import PostForm from './components/postForm';
 
 export default class App extends React.Component {
   render() {
-    return <Home />;
+    return (
+    <div className="container">
+      <PostForm />
+    </div>
+    );
   }
 }

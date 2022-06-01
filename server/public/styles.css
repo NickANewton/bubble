@@ -1,0 +1,72 @@
+body {
+  background-color: #f5fdff;
+  font-family: Lato, sans-serif;
+  font-weight: 400;
+  height: 100vh;
+}
+
+.bubble {
+  height: 18.75rem;
+  width: 18.75rem;
+  border-radius: 50%;
+  background-color: white;
+  box-shadow:
+    inset 0 1px 5px white,
+    inset 10px 10px 25px rgb(174, 156, 251, 0.5),
+    inset 0 10px 10px rgb(229, 205, 253, 0.5),
+    inset 0 -5px 30px rgb(9, 202, 240, 0.3);
+}
+
+h1 {
+  font-family: ABeeZee, sans-serif;
+}
+
+.form-ta-size {
+  height: 13.375rem;
+}
+
+.text-grey {
+  color: #cfd4d9;
+}
+
+/* font-family: 'ABeeZee', sans-serif;
+font-family: 'Bubblegum Sans', cursive;
+font-family: 'Lato', sans-serif;
+*/
+
+@media screen and (min-width: 768px) {
+  .side-nav {
+    top: unset;
+    left: unset;
+    right: unset;
+    bottom: unset;
+    background-color: #f5fdff !important;
+    width: 15vw;
+    border-right: 1px solid #cfd4d9;
+    height: 100vh;
+    position: relative;
+  }
+
+  .desktop-column {
+    flex-direction: column !important;
+  }
+
+  .desktop-border {
+    border-right: 1px solid #cfd4d9;
+    border-left: 1px solid #cfd4d9;
+  }
+
+  .width-540 {
+    width: 540px !important;
+  }
+
+  .right-bubbles {
+    width: 15vw;
+    border-left: 1px solid #cfd4d9;
+    height: 100vh;
+  }
+
+  .ul-desktop-height {
+    height: 25vh;
+  }
+}

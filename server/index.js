@@ -26,6 +26,12 @@ app.get('/api/hello', (req, res) => {
   res.json({ hello: 'world' });
 });
 
+// app.get('/api/feed', (req, res) => {
+//   const sql = `
+
+//   `
+// })
+
 app.post('/api/createPost', uploadsMiddleware, (req, res, next) => {
   const { caption, tags } = req.body;
   if (!caption) {

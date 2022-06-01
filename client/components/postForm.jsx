@@ -90,7 +90,7 @@ class PostForm extends React.Component {
               <div className="mb-3">
                 <input
                   required type="text"
-                  className="form-control form-control-lg"
+                  className="form-control"
                   placeholder="Tags (separated by commas)"
                   name="tags" onChange={this.handleTagsChange}
                   value={this.state.tags} />
@@ -98,7 +98,7 @@ class PostForm extends React.Component {
               <div className="mb-4">
                 <textarea
                   required type="text"
-                  className="form-control form-control-lg"
+                  className="form-control form-ta-size"
                   placeholder="What would you like to say?"
                   name="caption" onChange={this.handleCaptionChange}
                   value={this.state.caption} />

@@ -3,8 +3,8 @@ import React from 'react';
 class BottomNav extends React.Component {
   render() {
     return (
-      <nav className="navbar navbar-expand-sm bg-white fixed-bottom">
-        <ul className='d-flex list-unstyled container-fluid justify-content-around align-items-center'>
+      <nav className="navbar navbar-expand-sm bg-white fixed-bottom side-nav">
+        <ul className='d-flex list-unstyled container-fluid justify-content-around align-items-center desktop-column'>
           <li>
             <a className="navbar-brand" href="#">
               <i className="fa-solid fa-house fa-lg"></i>

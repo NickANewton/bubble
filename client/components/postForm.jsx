@@ -58,7 +58,7 @@ class PostForm extends React.Component {
 
   render() {
     return (
-      <>
+      <div className='mx-auto width-540'>
         <div className="row">
           <div className="col text-center mt-3">
             <h1>Create a new post</h1>
@@ -109,7 +109,7 @@ class PostForm extends React.Component {
             </form>
           </div>
         </div>
-      </>
+      </div>
     );
   }
 }

@@ -2,6 +2,7 @@ body {
   background-color: #f5fdff;
   font-family: Lato, sans-serif;
   font-weight: 400;
+  height: 100vh;
 }
 
 .bubble {
@@ -24,3 +25,25 @@ h1 {
 font-family: 'Bubblegum Sans', cursive;
 font-family: 'Lato', sans-serif;
 */
+
+@media screen and (min-width: 768px) {
+  .side-nav {
+    top: 0 !important;
+    left: 0 !important;
+    right: unset;
+    background-color: #f5fdff !important;
+  }
+
+  .desktop-column {
+    flex-direction: column !important;
+  }
+
+  .desktop-border {
+    border-right: 1px solid #cfd4d9;
+    border-left: 1px solid #cfd4d9;
+  }
+
+  .width-540 {
+    width: 540px !important;
+  }
+}

@@ -1,17 +1,68 @@
 insert into "users" ("username", "hashedPassword")
- values ('iceMan', 'jiekaafsddjfkweiojoasd');
+ values ('Gon', 'jiekaafsddjfkwelk'),
+        ('Killua', ';laksjdf;lakjwoie'),
+        ('Leorio', 'a;ksjdf;ajll;alks'),
+        ('Kurapika', 'jfiw;oiwj;asdkj;f');
 
-insert into "users" ("username", "hashedPassword")
-  values ('Mikey', ';laksjdf;lakjwoie');
-
-insert into "posts" ("userId", "imageUrl", "tags", "caption")
-  values ('2', '/images/image-1653957949934.png', '{"BBC","Sport News"}', 'BBC Sport'),
-         ('2', '/images/image-1654036586244.jpeg', '{"Warzone","Gaming","COD"}', 'This game is fun!'),
-         ('2', '/images/image-1654036710760.jpeg', '{"innout","food","yum"}', 'In n Out is the best burger!'),
-         ('2', '/images/image-1654039483214.webp', '{"Outdoor","hiking","nature"}', 'This hike was beautiful!'),
-         ('2', '/images/image-1654108307779.jpeg', '{"anime","jujutsu kaisen","Action"}', 'his is an awesome anime!'),
-         ('2', '/images/image-1654108361874.webp', '{"food","Yum","healthy"}','This is some good looking food!');
+insert into "posts" ("userId", "imageUrl", "caption")
+  values ('2', '/images/image-1653957949934.png',  'BBC is the best when it comes to soccer news, prove me wrong!'),
+         ('2', '/images/image-1654036586244.jpeg', 'Warzone saved me during the pandemic, anyone else have a similar exerience?'),
+         ('2', '/images/image-1654036710760.jpeg', 'In n Out has the best burger ever! End. Of. Story. Case closed.'),
+         ('3', '/images/image-1654039483214.webp', 'What is your favorite place to enjoy nature?'),
+         ('3', '/images/image-1654108307779.jpeg', 'This action in this anime is actually insane. 10/10 would recommend!'),
+         ('3', '/images/image-1654108361874.webp', 'Steins Gate is definitely the best time travel anime out there!'),
+         ('4', '/images/image-1654108361874.webp', 'I use reuters as my internation news source. Where do you get yours?'),
+         ('4', '/images/image-1654108361874.webp', 'Coronavirus is still out there, be safe everyone! Where a mask!'),
+         ('4', '/images/image-1654108361874.webp', 'Enjoying the beach! Who likes to surf?'),
+         ('4', '/images/image-1654108361874.webp', 'Healthy choices = happy life');
 
 insert into "likes" ("postId", "userId")
-  select "postId", 1 from "posts"
-  where "tags" = '{"innout", "food", "yum"}';
+  values (2, 1),
+         (4, 1),
+         (7, 1);
+
+insert into "tags" ("label")
+  values ('animals'),
+         ('apparel'),
+         ('art'),
+         ('automotive'),
+         ('entertainment'),
+         ('food'),
+         ('health'),
+         ('livestyle'),
+         ('music'),
+         ('nature'),
+         ('news'),
+         ('sports');
+
+insert into "postTags" ("postId", "tagId")
+values (2, 5),
+       (4, 10),
+       (4, 8),
+       (7, 11);
+
+--  postId w/ associated tags
+        -- 1 '{"news","sports"}',
+        -- 2 '{"entertainment"}',
+        -- 3 '{"food"}',
+        -- 4 '{"nature","lifestyle"}',
+        -- 5 '{"entertainment"}',
+        -- 6 '{"entertainment"}',
+        -- 7 '{"news"}',
+        -- 8 '{"health","lifestyle"}',
+        -- 9 '{"nature","lifestyle"}',
+        -- 10 '{"food","health","lifestyle"}'
+
+-- tagId
+        --  1 ('animals'),
+        --  2 ('apparel'),
+        --  3 ('art'),
+        --  4 ('automotive'),
+        --  5 ('entertainment'),
+        --  6 ('food'),
+        --  7 ('health'),
+        --  8 ('livestyle'),
+        --  9 ('music'),
+        --  10 ('nature'),
+        --  11 ('news'),
+        --  12 ('sports');

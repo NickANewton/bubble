@@ -27,7 +27,6 @@ app.get('/api/hello', (req, res) => {
 });
 
 app.get('/api/feed', (req, res, next) => {
-
   const sql = `
       with "liked_tags" AS (
         select distinct "pt"."tagId"

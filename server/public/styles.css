@@ -17,6 +17,13 @@ body {
     inset 0 -5px 30px rgb(9, 202, 240, 0.3);
 }
 
+img {
+  height: 6.25rem;
+  width: 6.25rem;
+  border-radius: 50%;
+  object-fit: cover;
+}
+
 h1 {
   font-family: ABeeZee, sans-serif;
 }
@@ -58,6 +65,10 @@ font-family: 'Lato', sans-serif;
 
   .width-540 {
     width: 540px !important;
+  }
+
+  .width-440 {
+    width: 440px;
   }
 
   .right-bubbles {

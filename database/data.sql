@@ -53,6 +53,8 @@ values (1, 11),
        (10, 7),
        (10, 8);
 
+
+
 --  postId w/ associated tags
         -- 1 '{"news","sports"}',
         -- 2 '{"entertainment"}',

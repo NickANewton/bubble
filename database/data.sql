@@ -29,17 +29,29 @@ insert into "tags" ("label")
          ('entertainment'),
          ('food'),
          ('health'),
-         ('livestyle'),
+         ('lifestyle'),
          ('music'),
          ('nature'),
          ('news'),
          ('sports');
 
 insert into "postTags" ("postId", "tagId")
-values (2, 5),
+values (1, 11),
+       (1, 12),
+       (2, 5),
+       (3, 6),
        (4, 10),
        (4, 8),
-       (7, 11);
+       (5, 5),
+       (6, 5),
+       (7, 11),
+       (8, 7),
+       (8, 8),
+       (9, 10),
+       (9, 8),
+       (10, 6),
+       (10, 7),
+       (10, 8);
 
 --  postId w/ associated tags
         -- 1 '{"news","sports"}',
@@ -61,7 +73,7 @@ values (2, 5),
         --  5 ('entertainment'),
         --  6 ('food'),
         --  7 ('health'),
-        --  8 ('livestyle'),
+        --  8 ('lifestyle'),
         --  9 ('music'),
         --  10 ('nature'),
         --  11 ('news'),

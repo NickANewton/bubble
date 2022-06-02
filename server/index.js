@@ -30,24 +30,38 @@ app.get('/api/feed', (req, res, next) => {
 
   const sql = `
       with "liked_tags" AS (
-        select "postId",
-               "tags"
-        from "posts"
+        select distinct "pt"."tagId"
+        from "postTags" as "pt"
         join "likes" as "l" using ("postId")
-        where "l"."userId" = 1
-      )
-      select "postId",
-            "imageUrl",
-            "caption"
-      from "posts"
-      join "liked_tags" using ("postId")
-      where "posts"."tags" like CONCAT("liked_tags"."tags", '%');
+        where "l"."userId" = $1
+      ), "recommendations" AS (
+        select distinct "p"."postId",
+                        "p"."imageUrl",
+                        "p"."createdAt"
+        from "posts" as "p"
+        join "postTags" using ("postId")
+        join "liked_tags" using ("tagId")
+        )
+        select "f"."postId",
+               "f"."imageUrl"
+          from (
+              select "p"."postId",
+                     "p"."imageUrl",
+                     "p"."createdAt"
+                from "posts" as "p"
+                where not exists (select 1 from "recommendations")
+                union
+                select "postId",
+                       "imageUrl",
+                       "createdAt"
+                  from "recommendations"
+                ) as f
+          order by "f"."createdAt" DESC;
         `;
 
-  return db.query(sql)
+  return db.query(sql, [2])
     .then(result => {
-      const [post] = result.rows;
-      res.json(post);
+      res.json(result.rows);
     })
     .catch(err => next(err));
 });

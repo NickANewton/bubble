@@ -14,12 +14,10 @@ insert into "posts" ("userId", "imageUrl", "caption")
          ('4', '/images/image-1654108361874.webp', 'I use reuters as my internation news source. Where do you get yours?'),
          ('4', '/images/image-1654108361874.webp', 'Coronavirus is still out there, be safe everyone! Where a mask!'),
          ('4', '/images/image-1654108361874.webp', 'Enjoying the beach! Who likes to surf?'),
-         ('4', '/images/image-1654108361874.webp', 'Healthy choices = happy life')
          ('4', '/images/image-1654108361874.webp', 'Healthy choices = happy life');
 
 insert into "likes" ("postId", "userId")
-  values (2, 1),
-         (4, 1),
+  values (4, 1),
          (7, 1);
 
 insert into "tags" ("label")

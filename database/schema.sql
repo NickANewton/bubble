@@ -23,7 +23,7 @@ CREATE TABLE "posts" (
 	"imageUrl" TEXT NOT NULL,
 	"createdAt" timestamptz(6) not null default now(),
 	"location" TEXT,
-	"tags" TEXT NOT NULL,
+	"tags" TEXT[] NOT NULL,
 	"caption" TEXT NOT NULL,
 	CONSTRAINT "posts_pk" PRIMARY KEY ("postId")
 ) WITH (

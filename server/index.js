@@ -26,11 +26,46 @@ app.get('/api/hello', (req, res) => {
   res.json({ hello: 'world' });
 });
 
-// app.get('/api/feed', (req, res) => {
-//   const sql = `
+app.get('/api/feed', (req, res, next) => {
+  // const sql = `
+  //     with "liked_tags" AS (
+  //       select "postId",
+  //              "tags"
+  //       from "posts"
+  //       join "likes" as "l" using ("postId")
+  //       where "l"."userId" = 1
+  //     )
 
-//   `
-// })
+  //     select "postId",
+  //           "imageUrl",
+  //           "caption"
+  //     from "posts"
+  //     join "liked_tags" using ("postId")
+  //     where "posts"."tags" like "liked_tags"."tags" + '%';
+  // `
+  const sql = `
+      with "liked_tags" AS (
+        select "postId",
+               "tags"
+        from "posts"
+        join "likes" as "l" using ("postId")
+        where "l"."userId" = 1
+      )
+      select "postId",
+            "imageUrl",
+            "caption"
+      from "posts"
+      join "liked_tags" using ("postId")
+      where "posts"."tags" like CONCAT("liked_tags"."tags", '%');
+        `;
+
+  return db.query(sql)
+    .then(result => {
+      const [post] = result.rows;
+      res.json(post);
+    })
+    .catch(err => next(err));
+});
 
 app.post('/api/createPost', uploadsMiddleware, (req, res, next) => {
   const { caption, tags } = req.body;

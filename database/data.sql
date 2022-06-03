@@ -9,11 +9,11 @@ insert into "posts" ("userId", "imageUrl", "caption")
          ('2', '/images/image-1654036586244.jpeg', 'Warzone saved me during the pandemic, anyone else have a similar exerience?'),
          ('2', '/images/image-1654036710760.jpeg', 'In n Out has the best burger ever! End. Of. Story. Case closed.'),
          ('3', '/images/image-1654039483214.webp', 'What is your favorite place to enjoy nature?'),
-         ('3', '/images/image-1654108307779.jpeg', 'This action in this anime is actually insane. 10/10 would recommend!'),
-         ('3', '/images/image-1654108361874.webp', 'Steins Gate is definitely the best time travel anime out there!'),
-         ('4', '/images/image-1654108361874.webp', 'I use reuters as my internation news source. Where do you get yours?'),
-         ('4', '/images/image-1654108361874.webp', 'Coronavirus is still out there, be safe everyone! Where a mask!'),
-         ('4', '/images/image-1654108361874.webp', 'Enjoying the beach! Who likes to surf?'),
+         ('3', '/images/image-1654282428275.jpeg', 'This action in this anime is actually insane. 10/10 would recommend!'),
+         ('3', '/images/image-1654282391733.jpg', 'Steins Gate is definitely the best time travel anime out there!'),
+         ('4', '/images/image-1654282226325.png',  'I use reuters as my internation news source. Where do you get yours?'),
+         ('4', '/images/image-1654282133733.webp', 'Coronavirus is still out there, be safe everyone! Where a mask!'),
+         ('4', '/images/image-1654282191251.jpeg', 'Enjoying the beach! Who likes to surf?'),
          ('4', '/images/image-1654108361874.webp', 'Healthy choices = happy life');
 
 insert into "likes" ("postId", "userId")

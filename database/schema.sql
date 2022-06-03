@@ -93,7 +93,7 @@ CREATE TABLE "postTags" (
 
 CREATE TABLE "tags" (
 	"tagId" serial NOT NULL,
-	"label" TEXT NOT NULL,
+	"label" TEXT NOT NULL UNIQUE,
 	CONSTRAINT "tags_pk" PRIMARY KEY ("tagId")
 ) WITH (
   OIDS=FALSE

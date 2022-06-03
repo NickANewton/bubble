@@ -34,19 +34,3 @@ class Feed extends React.Component {
 }
 
 export default Feed;
-
-/* <li className='mb-3 d-flex align-items-center'>
-              <img src="/images/image-1654036710760.jpeg" alt="" />
-            </li>
-            <li className='mb-3 d-flex align-items-center'>
-              <img src="/images/image-1654108307779.jpeg" alt="" />
-            </li>
-            <li className='mb-3 d-flex align-items-center'>
-              <img src="/images/image-1653957949934.png" alt="" />
-            </li>
-            <li className='mb-3 d-flex align-items-center'>
-              <img src="/images/image-1654039483214.webp" alt="" />
-            </li>
-            <li className='mb-3 d-flex align-items-center'>
-              <img src="/images/image-1654036586244.jpeg" alt="" />
-            </li> */

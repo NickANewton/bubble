@@ -65,6 +65,24 @@ app.get('/api/feed', (req, res, next) => {
     .catch(err => next(err));
 });
 
+app.get('/api/feed/:postId', (req, res, next) => {
+  const postId = Number(req.params.postId);
+  if (!postId) {
+    throw new ClientError(400, 'postId must be a positive integer');
+  }
+  const sql = `
+      select "postId",
+             "imageUrl",
+             "caption"
+       from "posts"
+       where "postId" = $1;
+  `;
+  const params = [postId];
+  db.query(sql, params)
+    .then(result => res.json(result.rows))
+    .catch(err => next(err));
+});
+
 app.post('/api/createPost', uploadsMiddleware, (req, res, next) => {
   const { caption, tags } = req.body;
   if (!caption) {

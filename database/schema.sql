@@ -9,7 +9,7 @@ CREATE TABLE "users" (
 	"userId" serial NOT NULL,
 	"username" TEXT NOT NULL,
 	"hashedPassword" TEXT NOT NULL,
-	"createdAt" timestamptz(6) not null default now(),
+	"createdAt" timestamp with time zone NOT NULL default now(),
 	CONSTRAINT "users_pk" PRIMARY KEY ("userId")
 ) WITH (
   OIDS=FALSE
@@ -21,9 +21,8 @@ CREATE TABLE "posts" (
 	"postId" serial NOT NULL,
 	"userId" int NOT NULL,
 	"imageUrl" TEXT NOT NULL,
-	"createdAt" timestamptz(6) not null default now(),
+	"createdAt" timestamp with time zone NOT NULL default now(),
 	"location" TEXT,
-	"tags" TEXT NOT NULL,
 	"caption" TEXT NOT NULL,
 	CONSTRAINT "posts_pk" PRIMARY KEY ("postId")
 ) WITH (
@@ -47,7 +46,7 @@ CREATE TABLE "comments" (
 	"postId" int NOT NULL,
 	"content" TEXT NOT NULL,
 	"replyingTo" int,
-	"createdAt" timestamp with time zone NOT NULL,
+	"createdAt" timestamp with time zone NOT NULL default now(),
 	CONSTRAINT "comments_pk" PRIMARY KEY ("commentId")
 ) WITH (
   OIDS=FALSE
@@ -76,7 +75,26 @@ CREATE TABLE "followers" (
 CREATE TABLE "merges" (
 	"postId" int NOT NULL,
 	"userId" int NOT NULL,
-	"createdAt" timestamp with time zone NOT NULL
+	"createdAt" timestamp with time zone NOT NULL default now()
+) WITH (
+  OIDS=FALSE
+);
+
+
+
+CREATE TABLE "postTags" (
+	"postId" int NOT NULL,
+	"tagId" int NOT NULL
+) WITH (
+  OIDS=FALSE
+);
+
+
+
+CREATE TABLE "tags" (
+	"tagId" serial NOT NULL,
+	"label" TEXT NOT NULL UNIQUE,
+	CONSTRAINT "tags_pk" PRIMARY KEY ("tagId")
 ) WITH (
   OIDS=FALSE
 );
@@ -101,3 +119,6 @@ ALTER TABLE "followers" ADD CONSTRAINT "followers_fk1" FOREIGN KEY ("followedId"
 
 ALTER TABLE "merges" ADD CONSTRAINT "merges_fk0" FOREIGN KEY ("postId") REFERENCES "posts"("postId");
 ALTER TABLE "merges" ADD CONSTRAINT "merges_fk1" FOREIGN KEY ("userId") REFERENCES "users"("userId");
+
+ALTER TABLE "postTags" ADD CONSTRAINT "postTags_fk0" FOREIGN KEY ("postId") REFERENCES "posts"("postId");
+ALTER TABLE "postTags" ADD CONSTRAINT "postTags_fk1" FOREIGN KEY ("tagId") REFERENCES "tags"("tagId");

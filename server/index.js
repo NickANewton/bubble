@@ -159,6 +159,24 @@ app.post('/api/likes', (req, res, next) => {
     .catch(err => next(err));
 });
 
+app.delete('/api/likes', (req, res, next) => {
+  const { userId, postId } = req.body;
+  if (!userId || !postId) {
+    throw new ClientError(400, 'userid and postid required');
+  }
+  const sql = `
+          delete from "likes"
+          where "userId" = $1
+                 AND
+                "postId" = $2
+          returning *;
+  `;
+  const params = [userId, postId];
+  db.query(sql, params)
+    .then(results => res.json(results.rows))
+    .catch(err => next(err));
+});
+
 app.use(errorMiddleware);
 
 app.listen(process.env.PORT, () => {

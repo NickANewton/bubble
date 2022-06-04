@@ -135,21 +135,27 @@ app.post('/api/createPost', uploadsMiddleware, (req, res, next) => {
 }
 );
 
+app.use(express.json());
+
 app.post('/api/likes', (req, res, next) => {
   const { userId, postId } = req.body;
+  if (!userId || !postId) {
+    throw new ClientError(400, 'userid and postid required');
+  }
   const sql = `
           insert into "likes" ("postId", "userId")
            select "p"."postId",
                   "u"."userId"
            from "posts" as "p",
-            "users" as "u"
-           where "userId" = $1
-                  and
-                  "postId" = $2;
+                "users" as "u"
+           where "u"."userId" = $1
+                  AND
+                  "p"."postId" = $2
+           returning *
   `;
   const params = [userId, postId];
   db.query(sql, params)
-    .then(results => res.json(results.rows[0]))
+    .then(results => res.json(results.rows))
     .catch(err => next(err));
 });
 

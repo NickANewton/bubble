@@ -12,7 +12,7 @@ insert into "posts" ("userId", "imageUrl", "caption")
          ('3', '/images/image-1654282428275.jpeg', 'This action in this anime is actually insane. 10/10 would recommend!'),
          ('3', '/images/image-1654282391733.jpg', 'Steins Gate is definitely the best time travel anime out there!'),
          ('4', '/images/image-1654282226325.png',  'I use reuters as my internation news source. Where do you get yours?'),
-         ('4', '/images/image-1654282133733.webp', 'Coronavirus is still out there, be safe everyone! Where a mask!'),
+         ('4', '/images/image-1654282133733.webp', 'Coronavirus is still out there, be safe everyone! Wear a mask!'),
          ('4', '/images/image-1654282191251.jpeg', 'Enjoying the beach! Who likes to surf?'),
          ('4', '/images/image-1654108361874.webp', 'Healthy choices = happy life');
 

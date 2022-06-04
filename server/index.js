@@ -65,21 +65,28 @@ app.get('/api/feed', (req, res, next) => {
     .catch(err => next(err));
 });
 
-app.get('/api/feed/:postId', (req, res, next) => {
+app.get('/api/posts/:postId', (req, res, next) => {
   const postId = Number(req.params.postId);
   if (!postId) {
     throw new ClientError(400, 'postId must be a positive integer');
   }
   const sql = `
-      select "postId",
+      select "u"."username",
+             "postId",
              "imageUrl",
              "caption"
        from "posts"
+       join "users" as "u" using ("userId")
        where "postId" = $1;
   `;
   const params = [postId];
   db.query(sql, params)
-    .then(result => res.json(result.rows))
+    .then(result => {
+      if (!result.rows[0]) {
+        throw new ClientError(404, `cannot find post with ${postId}`);
+      }
+      res.json(result.rows[0]);
+    })
     .catch(err => next(err));
 });
 

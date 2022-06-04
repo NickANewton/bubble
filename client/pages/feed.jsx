@@ -22,7 +22,9 @@ class Feed extends React.Component {
             {
               this.state.posts.map(posts => (
             <li key={posts.postId} id={posts.postId} className='mb-3 d-flex align-items-center'>
-              <img src={posts.imageUrl} alt="" />
+              <a href={`#posts?postId=${posts.postId}`}>
+                <img src={posts.imageUrl} alt="" />
+              </a>
             </li>
               ))
             }

@@ -28,12 +28,21 @@ h1 {
   font-family: ABeeZee, sans-serif;
 }
 
+h3 {
+  font-family: "Bubblegum Sans", cursive;
+}
+
 .form-ta-size {
   height: 13.375rem;
 }
 
 .text-grey {
   color: #cfd4d9;
+}
+
+.post-text-div {
+  border: 1px solid #dce4e6;
+  border-radius: 4px;
 }
 
 /* font-family: 'ABeeZee', sans-serif;

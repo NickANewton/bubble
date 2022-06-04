@@ -41,6 +41,9 @@ class PostDetails extends React.Component {
         </div>
         <p>{caption}</p>
       </div>
+      <div className='border-top border-bottom mt-3 p-3 d-flex justify-content-center'>
+          <i className="fa-solid fa-heart fa-xl text-grey"></i>
+      </div>
     </div>
     );
   }

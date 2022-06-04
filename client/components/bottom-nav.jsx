@@ -10,12 +10,12 @@ class BottomNav extends React.Component {
           </li>
           <li>
             <a className="navbar-item" href="#">
-              <i className="fa-solid fa-house fa-lg text-grey"></i>
+              <i className="fa-solid fa-house fa-lg text-info"></i>
             </a>
           </li>
           <li>
             <a className="navbar-item" href="#create-post">
-              <i className="fa-solid fa-circle-plus text-info fa-lg"></i>
+              <i className="fa-solid fa-circle-plus text-grey fa-lg"></i>
             </a>
           </li>
           <li>

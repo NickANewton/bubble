@@ -135,6 +135,24 @@ app.post('/api/createPost', uploadsMiddleware, (req, res, next) => {
 }
 );
 
+app.post('/api/likes', (req, res, next) => {
+  const { userId, postId } = req.body;
+  const sql = `
+          insert into "likes" ("postId", "userId")
+           select "p"."postId",
+                  "u"."userId"
+           from "posts" as "p",
+            "users" as "u"
+           where "userId" = $1
+                  and
+                  "postId" = $2;
+  `;
+  const params = [userId, postId];
+  db.query(sql, params)
+    .then(results => res.json(results.rows[0]))
+    .catch(err => next(err));
+});
+
 app.use(errorMiddleware);
 
 app.listen(process.env.PORT, () => {

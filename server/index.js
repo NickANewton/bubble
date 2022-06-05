@@ -143,12 +143,11 @@ app.get('/api/likes', (req, res, next) => {
     throw new ClientError(400, 'userid and postid required');
   }
   const sql = `
-        select "postId",
-               "userId"
-        from "likes"
-        where "postId" = $1
-               AND
-               "userId" = $2;
+        select exists(select 1
+                      from "likes"
+                      where "postId" = $1
+                             AND
+                             "userId" = $2);
   `;
   const params = [postId, userId];
   db.query(sql, params)

@@ -10,6 +10,10 @@ class LikeBtn extends React.Component {
     this.handleUnlike = this.handleUnlike.bind(this);
   }
 
+  componentDidMount() {
+
+  }
+
   handleLike(event) {
     fetch('/api/likes', {
       method: 'POST',

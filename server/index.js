@@ -163,7 +163,7 @@ app.put('/api/likes', (req, res, next) => {
   const sql = `
           insert into "likes" ("userId", "postId")
           select $1,
-                $2
+                 $2
           where not exists (
             select 1
               from "likes"
@@ -192,6 +192,22 @@ app.delete('/api/likes', (req, res, next) => {
   const params = [1, postId];
   db.query(sql, params)
     .then(results => res.json(results.rows))
+    .catch(err => next(err));
+});
+
+app.post('/api/comments', (req, res, next) => {
+  const { postId, content } = req.body;
+  if (!postId) {
+    throw new ClientError(400, 'postId required');
+  }
+  const sql = `
+          insert into "comments" ("userId", "postId", "content")
+          values ($1, $2, $3, $4)
+          returning *
+  `;
+  const params = [1, postId, content];
+  db.query(sql, params)
+    .then(result => res.json(result.rows))
     .catch(err => next(err));
 });
 

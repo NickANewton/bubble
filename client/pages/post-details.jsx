@@ -74,8 +74,9 @@ class PostDetails extends React.Component {
         </div>
         <p>{caption}</p>
       </div>
-        <div className='border-top border-bottom mt-3 p-3 d-flex justify-content-center'>
+        <div className='border-top border-bottom mt-3 p-3 d-flex justify-content-around'>
           <i className={`fa-solid fa-heart fa-xl ${likeColor}`} onClick={this.handleLike}></i>
+          <i className="fa-solid fa-comment fa-xl text-info"></i>
         </div>
     </div>
     );

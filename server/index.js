@@ -202,7 +202,7 @@ app.post('/api/comments', (req, res, next) => {
   }
   const sql = `
           insert into "comments" ("userId", "postId", "content")
-          values ($1, $2, $3, $4)
+          values ($1, $2, $3)
           returning *
   `;
   const params = [1, postId, content];

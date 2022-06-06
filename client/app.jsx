@@ -39,13 +39,13 @@ export default class App extends React.Component {
 
   render() {
     return (
-    <>
-      <CustomContainer>
-        <BottomNav />
-        { this.renderPage() }
-        <BubblesRight />
-      </CustomContainer>
-    </>
+        <>
+          <CustomContainer>
+            <BottomNav />
+            { this.renderPage() }
+            <BubblesRight />
+          </CustomContainer>
+        </>
     );
   }
 }

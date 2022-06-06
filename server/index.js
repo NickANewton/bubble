@@ -58,7 +58,7 @@ app.get('/api/feed', (req, res, next) => {
           order by "f"."createdAt" DESC;
         `;
 
-  return db.query(sql, [2])
+  return db.query(sql, [1])
     .then(result => {
       res.json(result.rows);
     })
@@ -137,10 +137,10 @@ app.post('/api/createPost', uploadsMiddleware, (req, res, next) => {
 
 app.use(express.json());
 
-app.get('/api/likes', (req, res, next) => {
-  const { userId, postId } = req.body;
-  if (!userId || !postId) {
-    throw new ClientError(400, 'userid and postid required');
+app.get('/api/likes/:postId', (req, res, next) => {
+  const postId = Number(req.params.postId);
+  if (!postId) {
+    throw new ClientError(400, 'postid must be a positive integer');
   }
   const sql = `
         select exists(select 1
@@ -149,38 +149,38 @@ app.get('/api/likes', (req, res, next) => {
                              AND
                              "userId" = $2);
   `;
-  const params = [postId, userId];
+  const params = [postId, 1];
   db.query(sql, params)
     .then(results => res.json(results.rows))
     .catch(err => next(err));
 });
 
-app.post('/api/likes', (req, res, next) => {
-  const { userId, postId } = req.body;
-  if (!userId || !postId) {
-    throw new ClientError(400, 'userid and postid required');
+app.put('/api/likes', (req, res, next) => {
+  const { postId } = req.body;
+  if (!postId) {
+    throw new ClientError(400, 'postId required');
   }
   const sql = `
-          insert into "likes" ("postId", "userId")
-           select "p"."postId",
-                  "u"."userId"
-           from "posts" as "p",
-                "users" as "u"
-           where "u"."userId" = $1
-                  AND
-                  "p"."postId" = $2
-           returning *
+          insert into "likes" ("userId", "postId")
+          select $1,
+                $2
+          where not exists (
+            select 1
+              from "likes"
+              where "userId" = $1
+                and "postId" = $2
+          )
   `;
-  const params = [userId, postId];
+  const params = [1, postId];
   db.query(sql, params)
-    .then(results => res.json(results.rows))
+    .then(results => res.json({ postId, userId: 1 }))
     .catch(err => next(err));
 });
 
 app.delete('/api/likes', (req, res, next) => {
-  const { userId, postId } = req.body;
-  if (!userId || !postId) {
-    throw new ClientError(400, 'userid and postid required');
+  const { postId } = req.body;
+  if (!postId) {
+    throw new ClientError(400, 'postid required');
   }
   const sql = `
           delete from "likes"
@@ -189,7 +189,7 @@ app.delete('/api/likes', (req, res, next) => {
                 "postId" = $2
           returning *;
   `;
-  const params = [userId, postId];
+  const params = [1, postId];
   db.query(sql, params)
     .then(results => res.json(results.rows))
     .catch(err => next(err));

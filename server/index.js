@@ -207,7 +207,27 @@ app.post('/api/comments', (req, res, next) => {
   `;
   const params = [1, postId, content];
   db.query(sql, params)
-    .then(result => res.json(result.rows))
+    .then(results => res.json(results.rows))
+    .catch(err => next(err));
+});
+
+app.get('/api/comments', (req, res, next) => {
+  const { postId } = req.body;
+  if (!postId) {
+    throw new ClientError(400, 'postId required');
+  }
+  const sql = `
+        select "c"."userId",
+               "u"."username",
+               "c"."postId",
+               "c"."content"
+        from "users" as "u"
+        join "comments" as "c" using ("userId")
+        where "c"."postId" = $1;
+  `;
+  const params = [postId];
+  db.query(sql, params)
+    .then(results => res.json(results.rows))
     .catch(err => next(err));
 });
 

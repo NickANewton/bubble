@@ -52,30 +52,11 @@ values (1, 11),
        (10, 7),
        (10, 8);
 
-
-
---  postId w/ associated tags
-        -- 1 '{"news","sports"}',
-        -- 2 '{"entertainment"}',
-        -- 3 '{"food"}',
-        -- 4 '{"nature","lifestyle"}',
-        -- 5 '{"entertainment"}',
-        -- 6 '{"entertainment"}',
-        -- 7 '{"news"}',
-        -- 8 '{"health","lifestyle"}',
-        -- 9 '{"nature","lifestyle"}',
-        -- 10 '{"food","health","lifestyle"}'
-
--- tagId
-        --  1  ('animals'),
-        --  2  ('apparel'),
-        --  3  ('art'),
-        --  4  ('automotive'),
-        --  5  ('entertainment'),
-        --  6  ('food'),
-        --  7  ('health'),
-        --  8  ('lifestyle'),
-        --  9  ('music'),
-        --  10 ('nature'),
-        --  11 ('news'),
-        --  12 ('sports');
+insert into "comments" ("userId", "postId", "content")
+values (1, 4, 'I would like to go on a hike soon!'),
+       (2, 4, 'Nature is incredible!'),
+       (3, 4, 'I like a good hike, but take me to the beach!'),
+       (4, 9, 'I tried, but its super hard!'),
+       (1, 9, 'Im a beach bum too!'),
+       (2, 9, 'Where can I learn to surf?'),
+       (3, 9, 'Nice moves!')

@@ -2,7 +2,7 @@ body {
   background-color: #f5fdff;
   font-family: Lato, sans-serif;
   font-weight: 400;
-  height: 100vh;
+  margin-bottom: 3.5rem;
 }
 
 .bubble {
@@ -43,6 +43,10 @@ h3 {
 .post-text-div {
   border: 1px solid #dce4e6;
   border-radius: 4px;
+}
+
+.bg-blue {
+  background-color: #f5fdff;
 }
 
 /* font-family: 'ABeeZee', sans-serif;

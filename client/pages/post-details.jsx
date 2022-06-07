@@ -13,7 +13,8 @@ class PostDetails extends React.Component {
     this.state = {
       post: null,
       isLiked: null,
-      comment: ''
+      comment: '',
+      userComments: null
     };
     this.handleLike = this.handleLike.bind(this);
     this.handleCommentChange = this.handleCommentChange.bind(this);
@@ -76,6 +77,11 @@ class PostDetails extends React.Component {
         isLiked: data[0].exists
       }))
       .catch(err => console.error(err));
+
+    fetch(`api/comments/${this.props.postId}`)
+      .then(res => res.json())
+      .then(userComments => this.setState({ userComments }))
+      .catch(err => console.error(err));
   }
 
   render() {
@@ -89,7 +95,7 @@ class PostDetails extends React.Component {
     }
     return (
      <div className='container width-540'>
-      <div className='mt-3 d-flex'>
+        <div className='mt-3 d-flex sticky-top bg-blue'>
         <a href="#" className='text-decoration-none text-info d-flex align-items-center'>
           <i className="fa-solid fa-arrow-left text-info fa-xl me-1"></i>
           <h3>Bubble Feed</h3>
@@ -104,35 +110,47 @@ class PostDetails extends React.Component {
         </div>
         <p>{caption}</p>
       </div>
-        <div className='border-top border-bottom mt-3 p-3 d-flex justify-content-around'>
-          <i className={`fa-solid fa-heart fa-xl ${likeColor}`} onClick={this.handleLike}></i>
-          <i className="fa-solid fa-comment fa-xl text-info" data-bs-toggle="modal" data-bs-target="#commentModal"></i>
+      <div className='border-top border-bottom mt-3 p-3 d-flex justify-content-around'>
+        <i className={`fa-solid fa-heart fa-xl ${likeColor}`} onClick={this.handleLike}></i>
+        <i className="fa-solid fa-comment fa-xl text-info" data-bs-toggle="modal" data-bs-target="#commentModal"></i>
+      </div>
+        <div>
+          {
+            this.state.userComments?.map(comm => (
+                <div key={comm.commentId} id={comm.commentId} className='post-text-div bg-white mt-3 p-3'>
+                  <div>
+                    <h5 className='text-info'>{comm.username}</h5>
+                  </div>
+                  <p>{comm.content}</p>
+                </div>
+            ))
+          }
         </div>
-        <div className="modal fade" id="commentModal" tabIndex="-1" aria-labelledby="commentModalLabel" aria-hidden="true">
-          <div className="modal-dialog modal-dialog-centered">
-            <div className="modal-content">
-              <div className="modal-header">
-                <h5 className="modal-title" id="commentModalLabel">Comment</h5>
-              </div>
-                <form onSubmit={this.onSubmit}>
-                  <div className="modal-body">
-                    <textarea
-                      required
-                      className="border-0"
-                      placeholder='Your comment here...'
-                      style={{ resize: 'none', height: 160 + 'px', width: 100 + '%' }}
-                      onChange={this.handleCommentChange}
-                      value={this.state.comment}>
-                      </textarea>
-                  </div>
-                  <div className="modal-footer">
-                    <button type="button" className="btn btn-white border border-secondary" data-bs-dismiss="modal">Close</button>
-                    <button type="submit" className="btn btn-info text-white" data-bs-dismiss="modal">POST</button>
-                  </div>
-                </form>
+      <div className="modal fade" id="commentModal" tabIndex="-1" aria-labelledby="commentModalLabel" aria-hidden="true">
+        <div className="modal-dialog modal-dialog-centered">
+          <div className="modal-content">
+            <div className="modal-header">
+              <h5 className="modal-title" id="commentModalLabel">Comment</h5>
             </div>
+              <form onSubmit={this.onSubmit}>
+                <div className="modal-body">
+                  <textarea
+                    required
+                    className="border-0"
+                    placeholder='Your comment here...'
+                    style={{ resize: 'none', height: 160 + 'px', width: 100 + '%' }}
+                    onChange={this.handleCommentChange}
+                    value={this.state.comment}>
+                    </textarea>
+                </div>
+                <div className="modal-footer">
+                  <button type="button" className="btn btn-white border border-secondary" data-bs-dismiss="modal">Close</button>
+                  <button type="submit" className="btn btn-info text-white" data-bs-dismiss="modal">POST</button>
+                </div>
+              </form>
           </div>
         </div>
+      </div>
     </div>
     );
   }

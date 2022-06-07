@@ -13,7 +13,8 @@ class PostDetails extends React.Component {
     this.state = {
       post: null,
       isLiked: null,
-      comment: ''
+      comment: '',
+      userComments: null
     };
     this.handleLike = this.handleLike.bind(this);
     this.handleCommentChange = this.handleCommentChange.bind(this);
@@ -76,6 +77,11 @@ class PostDetails extends React.Component {
         isLiked: data[0].exists
       }))
       .catch(err => console.error(err));
+
+    fetch(`api/comments/${this.props.postId}`)
+      .then(res => res.json())
+      .then(userComments => this.setState({ userComments }))
+      .catch(err => console.error(err));
   }
 
   render() {
@@ -107,6 +113,18 @@ class PostDetails extends React.Component {
         <div className='border-top border-bottom mt-3 p-3 d-flex justify-content-around'>
           <i className={`fa-solid fa-heart fa-xl ${likeColor}`} onClick={this.handleLike}></i>
           <i className="fa-solid fa-comment fa-xl text-info" data-bs-toggle="modal" data-bs-target="#commentModal"></i>
+        </div>
+        <div>
+          {
+            this.state.userComments.map(comments => (
+              <div key={comments.commentId} id={comments.commentId} className='post-text-div bg-white mt-3 p-3'>
+                <div>
+                  <h5 className='text-info'>{comments.username}</h5>
+                </div>
+                <p>{comments.content}</p>
+              </div>
+            ))
+          }
         </div>
         <div className="modal fade" id="commentModal" tabIndex="-1" aria-labelledby="commentModalLabel" aria-hidden="true">
           <div className="modal-dialog modal-dialog-centered">

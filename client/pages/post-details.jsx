@@ -127,7 +127,7 @@ class PostDetails extends React.Component {
                   </div>
                   <div className="modal-footer">
                     <button type="button" className="btn btn-white border border-secondary" data-bs-dismiss="modal">Close</button>
-                    <button type="submit" className="btn btn-info text-white">POST</button>
+                    <button type="submit" className="btn btn-info text-white" data-bs-dismiss="modal">POST</button>
                   </div>
                 </form>
             </div>

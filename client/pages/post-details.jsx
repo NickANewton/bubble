@@ -12,9 +12,12 @@ class PostDetails extends React.Component {
     super(props);
     this.state = {
       post: null,
-      isLiked: null
+      isLiked: null,
+      comment: ''
     };
     this.handleLike = this.handleLike.bind(this);
+    this.handleCommentChange = this.handleCommentChange.bind(this);
+    this.onSubmit = this.onSubmit.bind(this);
   }
 
   handleLike(event) {
@@ -29,6 +32,33 @@ class PostDetails extends React.Component {
       .then(data => {
         this.setState({
           isLiked: true
+        });
+      })
+      .catch(err => console.error(err));
+  }
+
+  handleCommentChange(event) {
+    this.setState({
+      comment: event.target.value
+    });
+  }
+
+  onSubmit(event) {
+    event.preventDefault();
+    fetch('/api/comments', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({
+        postId: this.state.post.postId,
+        content: this.state.comment
+      })
+    })
+      .then(response => response.json())
+      .then(data => {
+        this.setState({
+          comment: ''
         });
       })
       .catch(err => console.error(err));
@@ -76,17 +106,24 @@ class PostDetails extends React.Component {
       </div>
         <div className='border-top border-bottom mt-3 p-3 d-flex justify-content-around'>
           <i className={`fa-solid fa-heart fa-xl ${likeColor}`} onClick={this.handleLike}></i>
-          <i className="fa-solid fa-comment fa-xl text-info" data-bs-toggle="modal" data-bs-target="#exampleModal"></i>
+          <i className="fa-solid fa-comment fa-xl text-info" data-bs-toggle="modal" data-bs-target="#commentModal"></i>
         </div>
-        <div className="modal fade" id="exampleModal" tabIndex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div className="modal fade" id="commentModal" tabIndex="-1" aria-labelledby="commentModalLabel" aria-hidden="true">
           <div className="modal-dialog modal-dialog-centered">
             <div className="modal-content">
               <div className="modal-header">
-                <h5 className="modal-title" id="exampleModalLabel">Comment</h5>
+                <h5 className="modal-title" id="commentModalLabel">Comment</h5>
               </div>
-                <form>
+                <form onSubmit={this.onSubmit}>
                   <div className="modal-body">
-                    <textarea className="border-0" placeholder='Your comment here...' style={{ resize: 'none', height: 160 + 'px', width: 100 + '%' }}></textarea>
+                    <textarea
+                      required
+                      className="border-0"
+                      placeholder='Your comment here...'
+                      style={{ resize: 'none', height: 160 + 'px', width: 100 + '%' }}
+                      onChange={this.handleCommentChange}
+                      value={this.state.comment}>
+                      </textarea>
                   </div>
                   <div className="modal-footer">
                     <button type="button" className="btn btn-white border border-secondary" data-bs-dismiss="modal">Close</button>

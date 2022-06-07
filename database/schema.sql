@@ -45,7 +45,6 @@ CREATE TABLE "comments" (
 	"userId" int NOT NULL,
 	"postId" int NOT NULL,
 	"content" TEXT NOT NULL,
-	"replyingTo" int,
 	"createdAt" timestamp with time zone NOT NULL default now(),
 	CONSTRAINT "comments_pk" PRIMARY KEY ("commentId")
 ) WITH (
@@ -109,7 +108,6 @@ ALTER TABLE "likes" ADD CONSTRAINT "likes_fk1" FOREIGN KEY ("userId") REFERENCES
 
 ALTER TABLE "comments" ADD CONSTRAINT "comments_fk0" FOREIGN KEY ("userId") REFERENCES "users"("userId");
 ALTER TABLE "comments" ADD CONSTRAINT "comments_fk1" FOREIGN KEY ("postId") REFERENCES "posts"("postId");
-ALTER TABLE "comments" ADD CONSTRAINT "comments_fk2" FOREIGN KEY ("replyingTo") REFERENCES "comments"("commentId");
 
 ALTER TABLE "commentLikes" ADD CONSTRAINT "commentLikes_fk0" FOREIGN KEY ("commentId") REFERENCES "comments"("commentId");
 ALTER TABLE "commentLikes" ADD CONSTRAINT "commentLikes_fk1" FOREIGN KEY ("userId") REFERENCES "users"("userId");

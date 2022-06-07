@@ -76,7 +76,25 @@ class PostDetails extends React.Component {
       </div>
         <div className='border-top border-bottom mt-3 p-3 d-flex justify-content-around'>
           <i className={`fa-solid fa-heart fa-xl ${likeColor}`} onClick={this.handleLike}></i>
-          <i className="fa-solid fa-comment fa-xl text-info"></i>
+          <i className="fa-solid fa-comment fa-xl text-info" data-bs-toggle="modal" data-bs-target="#exampleModal"></i>
+        </div>
+        <div className="modal fade" id="exampleModal" tabIndex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+          <div className="modal-dialog modal-dialog-centered">
+            <div className="modal-content">
+              <div className="modal-header">
+                <h5 className="modal-title" id="exampleModalLabel">Comment</h5>
+              </div>
+                <form>
+                  <div className="modal-body">
+                    <textarea className="border-0" placeholder='Your comment here...' style={{ resize: 'none', height: 160 + 'px', width: 100 + '%' }}></textarea>
+                  </div>
+                  <div className="modal-footer">
+                    <button type="button" className="btn btn-white border border-secondary" data-bs-dismiss="modal">Close</button>
+                    <button type="submit" className="btn btn-info text-white">POST</button>
+                  </div>
+                </form>
+            </div>
+          </div>
         </div>
     </div>
     );

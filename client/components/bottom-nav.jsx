@@ -2,8 +2,12 @@ import React from 'react';
 
 class BottomNav extends React.Component {
   render() {
+    const { action } = this.props;
+    const isAuthPage = action === 'sign-up'
+      ? 'd-none'
+      : '';
     return (
-      <nav className="navbar bg-white fixed-bottom side-nav">
+      <nav className={`navbar bg-white fixed-bottom side-nav ${isAuthPage}`}>
         <ul className='d-flex list-unstyled container-fluid justify-content-around align-items-center desktop-column ul-desktop-height'>
           <li className='d-none'>
             <div></div>

@@ -53,31 +53,32 @@ export default class AuthPage extends React.Component {
       </div>
       <div className="row">
         <div className="col">
-          <form>
-            <div className="mb-3">
-              <input
-                type="text"
-                className="form-control form-control-lg"
-                placeholder="Username"
-                name="username"
-                onChange={this.handleChange}/>
-            </div>
-            <div className="mb-4">
+            <form onSubmit={this.handleSubmit}>
+              <div className="mb-3">
                 <input
-                  type="password"
+                  required
+                  type="text"
                   className="form-control form-control-lg"
-                  placeholder="Password"
-                  name="password"
+                  placeholder="Username"
+                  name="username"
                   onChange={this.handleChange}/>
-            </div>
-            <div className="mb-3 text-center text-">
-              <button
-                type="submit"
-                className="btn btn-info btn-lg text-white rounded-pill"
-                onSubmit={this.onSubmit}>
-                SIGN UP
-              </button>
-            </div>
+              </div>
+              <div className="mb-4">
+                  <input
+                    required
+                    type="password"
+                    className="form-control form-control-lg"
+                    placeholder="Password"
+                    name="password"
+                    onChange={this.handleChange}/>
+              </div>
+              <div className="mb-3 text-center text-">
+                <button
+                  type="submit"
+                  className="btn btn-info btn-lg text-white rounded-pill">
+                  SIGN UP
+                </button>
+              </div>
           </form>
         </div>
       </div>
@@ -98,6 +99,5 @@ export default class AuthPage extends React.Component {
         </div>
     </div>
     );
-
   }
 }

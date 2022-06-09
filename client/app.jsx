@@ -42,12 +42,13 @@ export default class App extends React.Component {
   }
 
   render() {
+    const { route } = this.state;
     return (
         <>
           <CustomContainer>
-            <BottomNav />
+            <BottomNav action={route.path} />
             { this.renderPage() }
-            <BubblesRight />
+          <BubblesRight action={route.path} />
           </CustomContainer>
         </>
     );

@@ -68,7 +68,7 @@ class PostForm extends React.Component {
           <div className="col mb-4 mt-3">
             <div
             style={{ backgroundImage: `url(${this.state.file})`, backgroundSize: 'cover', backgroundRepeat: 'no-repeat' }}
-            className="bubble mx-auto d-flex justify-content-center align-items-center">
+              className="bubble large-bubble mx-auto d-flex justify-content-center align-items-center">
               <label htmlFor="icon-btn-file">
                 <i className="fa-solid fa-plus fa-3x text-info"></i>
               </label>

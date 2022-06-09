@@ -6,6 +6,7 @@ import BubblesRight from './components/bubbles-right';
 import { parseRoute } from './lib';
 import Feed from './pages/feed';
 import PostDetails from './pages/post-details';
+import AuthPage from './pages/auth';
 
 export default class App extends React.Component {
   constructor(props) {
@@ -28,6 +29,9 @@ export default class App extends React.Component {
     if (route.path === '') {
       return <Feed />;
     }
+    if (route.path === 'sign-up') {
+      return <AuthPage />;
+    }
     if (route.path === 'create-post') {
       return <PostForm />;
     }
@@ -38,12 +42,13 @@ export default class App extends React.Component {
   }
 
   render() {
+    const { route } = this.state;
     return (
         <>
           <CustomContainer>
-            <BottomNav />
+            <BottomNav action={route.path} />
             { this.renderPage() }
-            <BubblesRight />
+          <BubblesRight action={route.path} />
           </CustomContainer>
         </>
     );

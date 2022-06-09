@@ -1,4 +1,5 @@
 import React from 'react';
+import AppContext from '../lib/app-context';
 
 export default class AuthPage extends React.Component {
   constructor(props) {
@@ -18,6 +19,7 @@ export default class AuthPage extends React.Component {
 
   handleSubmit(event) {
     event.preventDefault();
+    const { route, handleSignin } = this.context;
     const req = {
       method: 'POST',
       headers: {
@@ -25,20 +27,28 @@ export default class AuthPage extends React.Component {
       },
       body: JSON.stringify(this.state)
     };
-    fetch('/api/auth/sign-up', req)
+    fetch(`/api/auth/${route.path}`, req)
       .then(res => res.json())
       .then(result => {
-        window.location.hash = 'sign-up';
-        this.setState(
-          {
-            username: '',
-            password: ''
-          }
-        );
+        if (route.path === 'sign-up') {
+          window.location.hash = 'sign-in';
+        } else if (result.user && result.token) {
+          handleSignin(result);
+        }
       });
   }
 
   render() {
+    const { route } = this.context;
+    const submitBtnText = route.path === 'sign-up'
+      ? 'SIGN UP'
+      : 'SIGN IN';
+    const signInTextColor = route.path === 'sign-in'
+      ? 'text-black'
+      : 'text-secondary';
+    const signUpTextColor = route.path === 'sign-up'
+      ? 'text-black'
+      : 'text-secondary';
     return (
     <div className="container">
       <div className="row">
@@ -51,8 +61,9 @@ export default class AuthPage extends React.Component {
       <div className="row">
         <div className="col">
           <ul className="nav">
-            <li className="nav-item h2">
-              <a href="#" className="nav-link text-black">Sign Up</a>
+            <li className="nav-item h2 d-flex">
+              <a href="#sign-up" className={`nav-link ${signUpTextColor}`}>Sign Up</a>
+              <a href='#sign-in' className={`nav-link ${signInTextColor}`}>Sign In</a>
             </li>
           </ul>
         </div>
@@ -84,7 +95,8 @@ export default class AuthPage extends React.Component {
                 <button
                   type="submit"
                   className="btn btn-info btn-lg text-white rounded-pill">
-                  SIGN UP</button>
+                  {submitBtnText}
+                  </button>
               </div>
           </form>
         </div>
@@ -108,3 +120,5 @@ export default class AuthPage extends React.Component {
     );
   }
 }
+
+AuthPage.contextType = AppContext;

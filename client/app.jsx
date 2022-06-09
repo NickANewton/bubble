@@ -1,4 +1,6 @@
 import React from 'react';
+// import jwtDecode from 'jwt-decode';
+import AppContext from './lib/app-context';
 import PostForm from './components/postForm';
 import BottomNav from './components/bottom-nav';
 import CustomContainer from './pages/custom-container';
@@ -29,7 +31,7 @@ export default class App extends React.Component {
     if (route.path === '') {
       return <Feed />;
     }
-    if (route.path === 'sign-up') {
+    if (route.path === 'sign-up' || route.path === 'sign-in') {
       return <AuthPage />;
     }
     if (route.path === 'create-post') {
@@ -44,6 +46,7 @@ export default class App extends React.Component {
   render() {
     const { route } = this.state;
     return (
+      <AppContext.Provider>
         <>
           <CustomContainer>
             <BottomNav action={route.path} />
@@ -51,6 +54,7 @@ export default class App extends React.Component {
           <BubblesRight action={route.path} />
           </CustomContainer>
         </>
+    </AppContext.Provider >
     );
   }
 }

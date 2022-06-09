@@ -6,8 +6,6 @@ body {
 }
 
 .bubble {
-  height: 18.75rem;
-  width: 18.75rem;
   border-radius: 50%;
   background-color: white;
   box-shadow:
@@ -15,6 +13,11 @@ body {
     inset 10px 10px 25px rgb(174, 156, 251, 0.5),
     inset 0 10px 10px rgb(229, 205, 253, 0.5),
     inset 0 -5px 30px rgb(9, 202, 240, 0.3);
+}
+
+.large-bubble {
+  height: 18.75rem;
+  width: 18.75rem;
 }
 
 img {
@@ -30,6 +33,11 @@ h1 {
 
 h3 {
   font-family: "Bubblegum Sans", cursive;
+}
+
+.app-logo {
+  font-family: "Bubblegum Sans", cursive;
+  font-size: 5rem;
 }
 
 .form-ta-size {

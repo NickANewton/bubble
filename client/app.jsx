@@ -6,6 +6,7 @@ import BubblesRight from './components/bubbles-right';
 import { parseRoute } from './lib';
 import Feed from './pages/feed';
 import PostDetails from './pages/post-details';
+import AuthPage from './pages/auth';
 
 export default class App extends React.Component {
   constructor(props) {
@@ -27,6 +28,9 @@ export default class App extends React.Component {
     const { route } = this.state;
     if (route.path === '') {
       return <Feed />;
+    }
+    if (route.path === 'sign-up') {
+      return <AuthPage />;
     }
     if (route.path === 'create-post') {
       return <PostForm />;

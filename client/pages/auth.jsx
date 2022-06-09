@@ -84,8 +84,7 @@ export default class AuthPage extends React.Component {
                 <button
                   type="submit"
                   className="btn btn-info btn-lg text-white rounded-pill">
-                  SIGN UP
-                </button>
+                  SIGN UP</button>
               </div>
           </form>
         </div>

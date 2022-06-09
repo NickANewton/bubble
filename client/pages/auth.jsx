@@ -29,6 +29,12 @@ export default class AuthPage extends React.Component {
       .then(res => res.json())
       .then(result => {
         window.location.hash = 'sign-up';
+        this.setState(
+          {
+            username: '',
+            password: ''
+          }
+        );
       });
   }
 
@@ -61,6 +67,7 @@ export default class AuthPage extends React.Component {
                   className="form-control form-control-lg"
                   placeholder="Username"
                   name="username"
+                  value={this.state.username}
                   onChange={this.handleChange}/>
               </div>
               <div className="mb-4">
@@ -70,6 +77,7 @@ export default class AuthPage extends React.Component {
                     className="form-control form-control-lg"
                     placeholder="Password"
                     name="password"
+                    value={this.state.password}
                     onChange={this.handleChange}/>
               </div>
               <div className="mb-3 text-center text-">

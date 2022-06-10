@@ -101,18 +101,27 @@ app.get('/api/feed', (req, res, next) => {
         join "liked_tags" using ("tagId")
         )
         select "f"."postId",
-               "f"."imageUrl"
+               "f"."imageUrl",
+               "f"."numberOfLikes"
           from (
               select "p"."postId",
                      "p"."imageUrl",
-                     "p"."createdAt"
+                     "p"."createdAt",
+                     count("l".*) as "numberOfLikes"
                 from "posts" as "p"
+                left join "likes" as "l" on "p"."postId" = "l"."postId"
                 where not exists (select 1 from "recommendations")
+                group by "p"."postId"
                 union
-                select "postId",
-                       "imageUrl",
-                       "createdAt"
-                  from "recommendations"
+                select "r"."postId",
+                       "r"."imageUrl",
+                       "r"."createdAt",
+                       count("l".*) as "numberOfLikes"
+                  from "recommendations" as "r"
+                  left join "likes" as "l" on "r"."postId" = "l"."postId"
+                  group by "r"."postId",
+                           "r"."imageUrl",
+                           "r"."createdAt"
                 ) as f
           order by "f"."createdAt" DESC;
         `;

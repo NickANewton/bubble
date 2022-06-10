@@ -3,9 +3,11 @@ const pg = require('pg');
 const path = require('path');
 const argon2 = require('argon2');
 const express = require('express');
+const jwt = require('jsonwebtoken');
 const errorMiddleware = require('./error-middleware');
 const uploadsMiddleware = require('./uploads-middleware');
 const ClientError = require('./client-error');
+const authorizationMiddleware = require('./authorization-middleware');
 
 const db = new pg.Pool({
   connectionString: process.env.DATABASE_URL,
@@ -47,11 +49,43 @@ app.post('/api/auth/sign-up', (req, res, next) => {
     .catch(err => next(err));
 });
 
-app.get('/api/hello', (req, res) => {
-  res.json({ hello: 'world' });
+app.post('/api/auth/sign-in', (req, res, next) => {
+  const { username, password } = req.body;
+  if (!username || !password) {
+    throw new ClientError(401, 'invalid login');
+  }
+  const sql = `
+    select "userId",
+           "hashedPassword"
+      from "users"
+     where "username" = $1
+  `;
+  const params = [username];
+  db.query(sql, params)
+    .then(result => {
+      const [user] = result.rows;
+      if (!user) {
+        throw new ClientError(401, 'invalid login');
+      }
+      const { userId, hashedPassword } = user;
+      return argon2
+        .verify(hashedPassword, password)
+        .then(isMatching => {
+          if (!isMatching) {
+            throw new ClientError(401, 'invalid login');
+          }
+          const payload = { userId, username };
+          const token = jwt.sign(payload, process.env.TOKEN_SECRET);
+          res.json({ token, user: payload });
+        });
+    })
+    .catch(err => next(err));
 });
 
+app.use(authorizationMiddleware);
+
 app.get('/api/feed', (req, res, next) => {
+  const { userId } = req.user;
   const sql = `
       with "liked_tags" AS (
         select distinct "pt"."tagId"
@@ -82,8 +116,8 @@ app.get('/api/feed', (req, res, next) => {
                 ) as f
           order by "f"."createdAt" DESC;
         `;
-
-  return db.query(sql, [1])
+  const params = [userId];
+  return db.query(sql, params)
     .then(result => {
       res.json(result.rows);
     })
@@ -116,6 +150,7 @@ app.get('/api/posts/:postId', (req, res, next) => {
 });
 
 app.post('/api/createPost', uploadsMiddleware, (req, res, next) => {
+  const { userId } = req.user;
   const { caption, tags } = req.body;
   if (!caption) {
     throw new ClientError(400, 'caption is a required field');
@@ -127,11 +162,11 @@ app.post('/api/createPost', uploadsMiddleware, (req, res, next) => {
     const sql = `
      with "new_post" AS (
        insert into "posts" ("userId", "caption", "imageUrl")
-       values(1, $1, $2)
+       values($1, $2, $3)
        returning *
     ), "new_tags" AS (
       insert into "tags" ("label")
-      select unnest($3::text[])
+      select unnest($4::text[])
       on conflict ("label")
       do nothing
       returning "tagId"
@@ -150,7 +185,7 @@ app.post('/api/createPost', uploadsMiddleware, (req, res, next) => {
             "postTagIds" as "pti"
     ) select * from "new_post";
     `;
-    const params = [caption, newURL, tagsArray];
+    const params = [userId, caption, newURL, tagsArray];
     return db.query(sql, params)
       .then(result => {
         res.json(result.rows);
@@ -161,6 +196,7 @@ app.post('/api/createPost', uploadsMiddleware, (req, res, next) => {
 );
 
 app.get('/api/likes/:postId', (req, res, next) => {
+  const { userId } = req.user;
   const postId = Number(req.params.postId);
   if (!postId) {
     throw new ClientError(400, 'postid must be a positive integer');
@@ -172,13 +208,14 @@ app.get('/api/likes/:postId', (req, res, next) => {
                              AND
                              "userId" = $2);
   `;
-  const params = [postId, 1];
+  const params = [postId, userId];
   db.query(sql, params)
     .then(results => res.json(results.rows))
     .catch(err => next(err));
 });
 
 app.put('/api/likes', (req, res, next) => {
+  const { userId } = req.user;
   const { postId } = req.body;
   if (!postId) {
     throw new ClientError(400, 'postId required');
@@ -194,13 +231,14 @@ app.put('/api/likes', (req, res, next) => {
                 and "postId" = $2
           )
   `;
-  const params = [1, postId];
+  const params = [userId, postId];
   db.query(sql, params)
     .then(results => res.json({ postId, userId: 1 }))
     .catch(err => next(err));
 });
 
 app.delete('/api/likes', (req, res, next) => {
+  const { userId } = req.user;
   const { postId } = req.body;
   if (!postId) {
     throw new ClientError(400, 'postid required');
@@ -212,7 +250,7 @@ app.delete('/api/likes', (req, res, next) => {
                 "postId" = $2
           returning *;
   `;
-  const params = [1, postId];
+  const params = [userId, postId];
   db.query(sql, params)
     .then(results => res.json(results.rows))
     .catch(err => next(err));

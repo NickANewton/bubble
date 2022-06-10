@@ -1,4 +1,6 @@
 import React from 'react';
+import AppContext from '../lib/app-context';
+import Redirect from '../components/redirect';
 
 export default class AuthPage extends React.Component {
   constructor(props) {
@@ -18,6 +20,7 @@ export default class AuthPage extends React.Component {
 
   handleSubmit(event) {
     event.preventDefault();
+    const { route } = this.context;
     const req = {
       method: 'POST',
       headers: {
@@ -25,22 +28,33 @@ export default class AuthPage extends React.Component {
       },
       body: JSON.stringify(this.state)
     };
-    fetch('/api/auth/sign-up', req)
+    fetch(`/api/auth/${route.path}`, req)
       .then(res => res.json())
       .then(result => {
-        window.location.hash = 'sign-up';
-        this.setState(
-          {
-            username: '',
-            password: ''
-          }
-        );
+        if (route.path === 'sign-up') {
+          window.location.hash = 'sign-in';
+        } else if (result.user && result.token) {
+          this.context.handleSignIn(result);
+        }
       });
   }
 
   render() {
+    const { user, route } = this.context;
+
+    if (user) return <Redirect to="" />;
+
+    const submitBtnText = route.path === 'sign-up'
+      ? 'SIGN UP'
+      : 'SIGN IN';
+    const signInTextColor = route.path === 'sign-in'
+      ? 'text-black'
+      : 'text-secondary';
+    const signUpTextColor = route.path === 'sign-up'
+      ? 'text-black'
+      : 'text-secondary';
     return (
-    <div className="container">
+    <div className="mx-auto width-540">
       <div className="row">
         <div className="col d-flex justify-content-center align-items-center mt-3 mb-3">
             <div className="bubble large-bubble d-flex justify-content-center align-items-center">
@@ -51,8 +65,9 @@ export default class AuthPage extends React.Component {
       <div className="row">
         <div className="col">
           <ul className="nav">
-            <li className="nav-item h2">
-              <a href="#" className="nav-link text-black">Sign Up</a>
+            <li className="nav-item h2 d-flex">
+              <a href="#sign-up" className={`nav-link ${signUpTextColor}`}>Sign Up</a>
+              <a href='#sign-in' className={`nav-link ${signInTextColor}`}>Sign In</a>
             </li>
           </ul>
         </div>
@@ -63,6 +78,7 @@ export default class AuthPage extends React.Component {
               <div className="mb-3">
                 <input
                   required
+                  autoFocus
                   type="text"
                   className="form-control form-control-lg"
                   placeholder="Username"
@@ -84,7 +100,8 @@ export default class AuthPage extends React.Component {
                 <button
                   type="submit"
                   className="btn btn-info btn-lg text-white rounded-pill">
-                  SIGN UP</button>
+                  {submitBtnText}
+                  </button>
               </div>
           </form>
         </div>
@@ -108,3 +125,5 @@ export default class AuthPage extends React.Component {
     );
   }
 }
+
+AuthPage.contextType = AppContext;

@@ -1,4 +1,6 @@
 import React from 'react';
+import jwtDecode from 'jwt-decode';
+import AppContext from './lib/app-context';
 import PostForm from './components/postForm';
 import BottomNav from './components/bottom-nav';
 import CustomContainer from './pages/custom-container';
@@ -12,8 +14,11 @@ export default class App extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
+      user: null,
+      isAuthorizing: true,
       route: parseRoute(window.location.hash)
     };
+    this.handleSignIn = this.handleSignIn.bind(this);
   }
 
   componentDidMount() {
@@ -22,6 +27,15 @@ export default class App extends React.Component {
         route: parseRoute(window.location.hash)
       });
     };
+    const token = window.localStorage.getItem('bubble-jwt');
+    const user = token ? jwtDecode(token) : null;
+    this.setState({ user, isAuthorizing: false });
+  }
+
+  handleSignIn(result) {
+    const { user, token } = result;
+    window.localStorage.setItem('bubble-jwt', token);
+    this.setState({ user });
   }
 
   renderPage() {
@@ -29,7 +43,7 @@ export default class App extends React.Component {
     if (route.path === '') {
       return <Feed />;
     }
-    if (route.path === 'sign-up') {
+    if (route.path === 'sign-up' || route.path === 'sign-in') {
       return <AuthPage />;
     }
     if (route.path === 'create-post') {
@@ -42,15 +56,21 @@ export default class App extends React.Component {
   }
 
   render() {
-    const { route } = this.state;
+    if (this.state.isAuthorizing) return null;
+    const { user, route } = this.state;
+    const { handleSignIn } = this;
+    const contextValue = { user, route, handleSignIn };
+
     return (
+      <AppContext.Provider value={contextValue}>
         <>
           <CustomContainer>
-            <BottomNav action={route.path} />
+            <BottomNav/>
             { this.renderPage() }
-          <BubblesRight action={route.path} />
+          <BubblesRight/>
           </CustomContainer>
         </>
+    </AppContext.Provider >
     );
   }
 }

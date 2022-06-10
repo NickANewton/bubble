@@ -1,9 +1,10 @@
 import React from 'react';
+import AppContext from '../lib/app-context';
 
-class BottomNav extends React.Component {
+export default class BottomNav extends React.Component {
   render() {
-    const { action } = this.props;
-    const isAuthPage = action === 'sign-up'
+    const { route } = this.context;
+    const isAuthPage = route.path === 'sign-up' || route.path === 'sign-in'
       ? 'd-none'
       : '';
     return (
@@ -33,4 +34,4 @@ class BottomNav extends React.Component {
   }
 }
 
-export default BottomNav;
+BottomNav.contextType = AppContext;

@@ -14,7 +14,7 @@ class PostDetails extends React.Component {
       post: null,
       isLiked: null,
       comment: '',
-      userComments: null
+      userComments: []
     };
     this.handleLike = this.handleLike.bind(this);
     this.handleCommentChange = this.handleCommentChange.bind(this);
@@ -25,7 +25,8 @@ class PostDetails extends React.Component {
     fetch('/api/likes', {
       method: 'PUT',
       headers: {
-        'Content-Type': 'application/json'
+        'Content-Type': 'application/json',
+        'X-Access-Token': window.localStorage.getItem('bubble-jwt')
       },
       body: JSON.stringify({ postId: this.state.post.postId })
     })
@@ -49,7 +50,8 @@ class PostDetails extends React.Component {
     fetch('/api/comments', {
       method: 'POST',
       headers: {
-        'Content-Type': 'application/json'
+        'Content-Type': 'application/json',
+        'X-Access-Token': window.localStorage.getItem('bubble-jwt')
       },
       body: JSON.stringify({
         postId: this.state.post.postId,
@@ -66,19 +68,31 @@ class PostDetails extends React.Component {
   }
 
   componentDidMount() {
-    fetch(`api/posts/${this.props.postId}`)
+    fetch(`api/posts/${this.props.postId}`, {
+      headers: {
+        'X-Access-Token': window.localStorage.getItem('bubble-jwt')
+      }
+    })
       .then(res => res.json())
       .then(post => this.setState({ post }))
       .catch(err => console.error(err));
 
-    fetch(`api/likes/${this.props.postId}`)
+    fetch(`api/likes/${this.props.postId}`, {
+      headers: {
+        'X-Access-Token': window.localStorage.getItem('bubble-jwt')
+      }
+    })
       .then(res => res.json())
       .then(data => this.setState({
         isLiked: data[0].exists
       }))
       .catch(err => console.error(err));
 
-    fetch(`api/comments/${this.props.postId}`)
+    fetch(`api/comments/${this.props.postId}`, {
+      headers: {
+        'X-Access-Token': window.localStorage.getItem('bubble-jwt')
+      }
+    })
       .then(res => res.json())
       .then(userComments => this.setState({ userComments }))
       .catch(err => console.error(err));
@@ -116,7 +130,7 @@ class PostDetails extends React.Component {
       </div>
         <div>
           {
-            this.state.userComments?.map(comm => (
+            this.state.userComments.map(comm => (
                 <div key={comm.commentId} id={comm.commentId} className='post-text-div bg-white mt-3 p-3'>
                   <div>
                     <h5 className='text-info'>{comm.username}</h5>

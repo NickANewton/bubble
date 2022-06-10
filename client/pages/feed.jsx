@@ -1,4 +1,6 @@
 import React from 'react';
+import Redirect from '../components/redirect';
+import AppContext from '../lib/app-context';
 
 class Feed extends React.Component {
   constructor(props) {
@@ -9,12 +11,19 @@ class Feed extends React.Component {
   }
 
   componentDidMount() {
-    fetch('/api/feed')
+    fetch('/api/feed', {
+      headers: {
+        'X-Access-Token': window.localStorage.getItem('bubble-jwt')
+      }
+    })
       .then(res => res.json())
       .then(posts => this.setState({ posts }));
   }
 
   render() {
+
+    if (this.context.user === null) return <Redirect to="sign-in" />;
+
     return (
       <>
         <div className='container'>
@@ -36,3 +45,5 @@ class Feed extends React.Component {
 }
 
 export default Feed;
+
+Feed.contextType = AppContext;

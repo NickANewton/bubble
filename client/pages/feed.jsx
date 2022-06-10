@@ -22,7 +22,7 @@ class Feed extends React.Component {
 
   render() {
 
-    if (!this.context.user) return <Redirect to="sign-in" />;
+    if (this.context.user === null) return <Redirect to="sign-in" />;
 
     return (
       <>

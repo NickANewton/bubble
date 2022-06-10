@@ -1,5 +1,6 @@
 import React from 'react';
 import AppContext from '../lib/app-context';
+import Redirect from '../components/redirect';
 
 export default class AuthPage extends React.Component {
   constructor(props) {
@@ -19,7 +20,7 @@ export default class AuthPage extends React.Component {
 
   handleSubmit(event) {
     event.preventDefault();
-    const { route, handleSignin } = this.context;
+    const { route } = this.context;
     const req = {
       method: 'POST',
       headers: {
@@ -33,13 +34,16 @@ export default class AuthPage extends React.Component {
         if (route.path === 'sign-up') {
           window.location.hash = 'sign-in';
         } else if (result.user && result.token) {
-          handleSignin(result);
+          this.context.handleSignIn(result);
         }
       });
   }
 
   render() {
-    const { route } = this.context;
+    const { user, route } = this.context;
+
+    if (user) return <Redirect to="" />;
+
     const submitBtnText = route.path === 'sign-up'
       ? 'SIGN UP'
       : 'SIGN IN';
@@ -50,7 +54,7 @@ export default class AuthPage extends React.Component {
       ? 'text-black'
       : 'text-secondary';
     return (
-    <div className="container">
+    <div className="mx-auto width-540">
       <div className="row">
         <div className="col d-flex justify-content-center align-items-center mt-3 mb-3">
             <div className="bubble large-bubble d-flex justify-content-center align-items-center">
@@ -74,6 +78,7 @@ export default class AuthPage extends React.Component {
               <div className="mb-3">
                 <input
                   required
+                  autoFocus
                   type="text"
                   className="form-control form-control-lg"
                   placeholder="Username"

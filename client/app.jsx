@@ -18,6 +18,7 @@ export default class App extends React.Component {
       isAuthorizing: true,
       route: parseRoute(window.location.hash)
     };
+    this.handleSignIn = this.handleSignIn.bind(this);
   }
 
   componentDidMount() {
@@ -26,14 +27,14 @@ export default class App extends React.Component {
         route: parseRoute(window.location.hash)
       });
     };
-    const token = window.localStorage.getItem('react-context-jwt');
+    const token = window.localStorage.getItem('bubble-jwt');
     const user = token ? jwtDecode(token) : null;
     this.setState({ user, isAuthorizing: false });
   }
 
   handleSignIn(result) {
     const { user, token } = result;
-    window.localStorage.setItem('react-context-jwt', token);
+    window.localStorage.setItem('bubble-jwt', token);
     this.setState({ user });
   }
 

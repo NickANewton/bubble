@@ -2,7 +2,16 @@ insert into "users" ("username", "hashedPassword")
  values ('Gon', 'jiekaafsddjfkwelk'),
         ('Killua', ';laksjdf;lakjwoie'),
         ('Leorio', 'a;ksjdf;ajll;alks'),
-        ('Kurapika', 'jfiw;oiwj;asdkj;f');
+        ('Kurapika', 'jfiw;oiwj;asdkj;f'),
+        ('L', ';ksjdf;ajll;alks'),
+        ('R', 'a;ksjdf;ajll;alk'),
+        ('J', 'a;ksjdf;jll;alks'),
+        ('K', 'a;ksjdf;ajll;alks'),
+        ('P', 'a;sjdf;ajll;alks'),
+        ('O', 'a;ksjd;ajll;alks'),
+        ('Z', 'ajdf;ajll;alks'),
+        ('T', 'a;ksjdf;ajll;ks');
+
 
 insert into "posts" ("userId", "imageUrl", "caption")
   values ('2', '/images/image-1653957949934.png',  'BBC is the best when it comes to soccer news, prove me wrong!'),
@@ -18,7 +27,26 @@ insert into "posts" ("userId", "imageUrl", "caption")
 
 insert into "likes" ("postId", "userId")
   values (4, 1),
-         (7, 1);
+         (4, 2),
+         (4, 3),
+         (4, 4),
+         (4, 5),
+         (4, 6),
+         (4, 7),
+         (4, 8),
+         (7, 1),
+         (7, 2),
+         (7, 3),
+         (7, 4),
+         (7, 5),
+         (7, 6),
+         (7, 7),
+         (7, 8),
+         (7, 9),
+         (7, 10),
+         (7, 11),
+         (7, 12);
+
 
 insert into "tags" ("label")
   values ('animals'),

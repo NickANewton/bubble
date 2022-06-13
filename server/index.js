@@ -181,7 +181,7 @@ app.post('/api/createPost', uploadsMiddleware, (req, res, next) => {
       returning "tagId"
     ), "postTagIds" AS (
       select "tagId"
-      from (select unnest($3::text[]) as "label") as "labels"
+      from (select unnest($4::text[]) as "label") as "labels"
       join "tags" using ("label")
       union
       select "tagId" from "new_tags"

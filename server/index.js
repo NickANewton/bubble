@@ -167,7 +167,7 @@ app.post('/api/createPost', uploadsMiddleware, (req, res, next) => {
     throw new ClientError(400, 'tags is a required field');
   } else {
     const tagsArray = tags.split(',').map(tag => tag.toLowerCase());
-    const newURL = `/images/${req.file.filename}`;
+    const newURL = `https://bubblesocialapp.s3.us-west-1.amazonaws.com/${req.file.key}`;
     const sql = `
      with "new_post" AS (
        insert into "posts" ("userId", "caption", "imageUrl")

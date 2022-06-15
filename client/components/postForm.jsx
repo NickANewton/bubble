@@ -42,6 +42,9 @@ class PostForm extends React.Component {
 
     fetch('/api/createPost', {
       method: 'POST',
+      headers: {
+        'X-Access-Token': window.localStorage.getItem('bubble-jwt')
+      },
       body: form
     })
       .then(response => response.json())

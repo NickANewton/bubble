@@ -22,6 +22,7 @@ class Feed extends React.Component {
 
   render() {
     if (this.context.user === null) return <Redirect to="sign-in" />;
+    if (this.state.posts === []) return null;
     return (
       <>
         <div className='container'>
@@ -30,21 +31,17 @@ class Feed extends React.Component {
               this.state.posts.map(posts => {
                 let size;
                 const numLikes = Number(posts.numberOfLikes);
-                if (numLikes < 3) {
+                if (numLikes < 4) {
                   size = 90;
-                } else if (numLikes < 6) {
-                  size = 110;
                 } else if (numLikes < 9) {
                   size = 130;
-                } else if (numLikes < 12) {
-                  size = 150;
-                } else if (numLikes >= 12) {
+                } else {
                   size = 170;
                 }
                 return (
             <li key={posts.postId} id={posts.postId} className='mb-3 d-flex align-items-center'>
               <a href={`#posts?postId=${posts.postId}`}>
-                <img src={posts.imageUrl} alt="" style={{ width: size + 'px', height: size + 'px' }}/>
+                <img src={posts.imageUrl} style={{ width: size + 'px', height: size + 'px' }}/>
               </a>
             </li>
                 );

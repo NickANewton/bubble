@@ -33,6 +33,10 @@ export default class AuthPage extends React.Component {
       .then(result => {
         if (route.path === 'sign-up') {
           window.location.hash = 'sign-in';
+          this.setState({
+            username: '',
+            password: ''
+          });
         } else if (result.user && result.token) {
           this.context.handleSignIn(result);
         }
@@ -47,12 +51,15 @@ export default class AuthPage extends React.Component {
     const submitBtnText = route.path === 'sign-up'
       ? 'SIGN UP'
       : 'SIGN IN';
-    const signInTextColor = route.path === 'sign-in'
-      ? 'text-black'
-      : 'text-secondary';
-    const signUpTextColor = route.path === 'sign-up'
-      ? 'text-black'
-      : 'text-secondary';
+    const altLinkText = route.path === 'sign-up'
+      ? 'Sign-In'
+      : 'Sign-Up';
+    const altHash = route.path === 'sign-up'
+      ? '#sign-in'
+      : '#sign-up';
+    const altMessage = route.path === 'sign-up'
+      ? 'Sign-up to create an account'
+      : 'Please sign-in to continue';
     return (
     <div className="mx-auto width-540">
       <div className="row">
@@ -64,10 +71,9 @@ export default class AuthPage extends React.Component {
       </div>
       <div className="row">
         <div className="col">
-          <ul className="nav">
+          <ul className="nav mb-2">
             <li className="nav-item h2 d-flex">
-              <a href="#sign-up" className={`nav-link ${signUpTextColor}`}>Sign Up</a>
-              <a href='#sign-in' className={`nav-link ${signInTextColor}`}>Sign In</a>
+              <a href={altHash} className="text-secondary">{altLinkText}</a>
             </li>
           </ul>
         </div>
@@ -86,7 +92,7 @@ export default class AuthPage extends React.Component {
                   value={this.state.username}
                   onChange={this.handleChange}/>
               </div>
-              <div className="mb-4">
+              <div className="mb-3">
                   <input
                     required
                     type="password"
@@ -96,12 +102,15 @@ export default class AuthPage extends React.Component {
                     value={this.state.password}
                     onChange={this.handleChange}/>
               </div>
-              <div className="mb-3 text-center text-">
+              <div className='mb-3'>
+                <p className='text-center'>{altMessage}</p>
+              </div>
+              <div className="mb-3 text-center">
                 <button
                   type="submit"
                   className="btn btn-info btn-lg text-white rounded-pill">
                   {submitBtnText}
-                  </button>
+                </button>
               </div>
           </form>
         </div>

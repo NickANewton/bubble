@@ -7,23 +7,26 @@ export default class BottomNav extends React.Component {
     const isAuthPage = route.path === 'sign-up' || route.path === 'sign-in'
       ? 'd-none'
       : '';
+    const iconHome = route.path === ''
+      ? 'text-info'
+      : 'text-grey';
+    const iconPost = route.path === 'create-post'
+      ? 'text-info'
+      : 'text-grey';
     return (
       <nav className={`navbar bg-white fixed-bottom side-nav ${isAuthPage}`}>
         <ul className='d-flex list-unstyled container-fluid justify-content-around align-items-center desktop-column ul-desktop-height'>
-          <li className='d-none'>
-            <div></div>
-          </li>
           <li>
             <a className="navbar-item" href="#">
-              <i className="fa-solid fa-house fa-lg text-info"></i>
+              <i className={`fa-solid fa-house fa-lg ${iconHome}`}></i>
             </a>
           </li>
           <li>
             <a className="navbar-item" href="#create-post">
-              <i className="fa-solid fa-circle-plus text-grey fa-lg"></i>
+              <i className={`fa-solid fa-circle-plus fa-lg ${iconPost}`}></i>
             </a>
           </li>
-          <li>
+          <li className='d-none'>
             <a className="navbar-item" href="#">
               <i className="fa-solid fa-user text-grey fa-lg"></i>
             </a>

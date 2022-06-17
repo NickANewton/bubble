@@ -1,4 +1,6 @@
 import React from 'react';
+import AppContext from '../lib/app-context';
+import Redirect from './redirect';
 
 class PostForm extends React.Component {
   constructor(props) {
@@ -55,11 +57,13 @@ class PostForm extends React.Component {
           file: ''
         });
         this.fileInputRef.current.value = null;
+        window.location.hash = '';
       })
       .catch(err => console.error(err));
   }
 
   render() {
+    if (this.context.user === null) return <Redirect to="sign-in" />;
     return (
       <div className='mx-auto width-540'>
         <div className="row">
@@ -70,7 +74,7 @@ class PostForm extends React.Component {
         <div className="row">
           <div className="col mb-4 mt-3">
             <div
-            style={{ backgroundImage: `url(${this.state.file})`, backgroundSize: 'cover', backgroundRepeat: 'no-repeat' }}
+            style={{ backgroundImage: `url(${this.state.file})`, backgroundSize: 'cover', backgroundRepeat: 'no-repeat', backgroundPosition: 'center' }}
               className="bubble large-bubble mx-auto d-flex justify-content-center align-items-center">
               <label htmlFor="icon-btn-file">
                 <i className="fa-solid fa-plus fa-3x text-info"></i>
@@ -118,3 +122,5 @@ class PostForm extends React.Component {
 }
 
 export default PostForm;
+
+PostForm.contextType = AppContext;

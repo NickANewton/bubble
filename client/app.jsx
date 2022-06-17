@@ -67,7 +67,7 @@ export default class App extends React.Component {
           <CustomContainer>
             <BottomNav/>
             { this.renderPage() }
-          <BubblesRight/>
+            <BubblesRight/>
           </CustomContainer>
         </>
     </AppContext.Provider >

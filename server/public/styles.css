@@ -5,6 +5,11 @@ body {
   margin-bottom: 3.5rem;
 }
 
+button,
+i {
+  cursor: pointer;
+}
+
 .bubble {
   border-radius: 50%;
   background-color: white;
@@ -56,11 +61,6 @@ h3 {
 .bg-blue {
   background-color: #f5fdff;
 }
-
-/* font-family: 'ABeeZee', sans-serif;
-font-family: 'Bubblegum Sans', cursive;
-font-family: 'Lato', sans-serif;
-*/
 
 @media screen and (min-width: 768px) {
   .side-nav {

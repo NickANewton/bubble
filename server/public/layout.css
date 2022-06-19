@@ -1,0 +1,15 @@
+.content-width {
+  width: 375px !important;
+}
+
+@media screen and (min-width: 768px) {
+  .content-width {
+    width: 440px !important;
+  }
+}
+
+@media screen and (min-width: 1280px) {
+  .content-width {
+    width: 540px !important;
+  }
+}

@@ -108,7 +108,7 @@ class PostDetails extends React.Component {
       likeColor = 'text-grey';
     }
     return (
-     <div className='container width-540'>
+     <div className='container content-width'>
         <div className='mt-3 d-flex sticky-top bg-blue'>
         <a href="#" className='text-decoration-none text-info d-flex align-items-center'>
           <i className="fa-solid fa-arrow-left text-info fa-xl me-1"></i>

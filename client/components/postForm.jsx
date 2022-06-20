@@ -8,7 +8,8 @@ class PostForm extends React.Component {
     this.state = {
       tags: '',
       caption: '',
-      file: ''
+      file: '',
+      didSubmit: false
     };
     this.fileInputRef = React.createRef();
     this.handleTagsChange = this.handleTagsChange.bind(this);
@@ -41,6 +42,9 @@ class PostForm extends React.Component {
     form.append('tags', this.state.tags);
     form.append('caption', this.state.caption);
     form.append('image', this.fileInputRef.current.files[0]);
+    this.setState({
+      didSubmit: true
+    });
 
     fetch('/api/createPost', {
       method: 'POST',
@@ -54,7 +58,8 @@ class PostForm extends React.Component {
         this.setState({
           tags: '',
           caption: '',
-          file: ''
+          file: '',
+          didSubmit: false
         });
         this.fileInputRef.current.value = null;
         window.location.hash = '';
@@ -64,6 +69,12 @@ class PostForm extends React.Component {
 
   render() {
     if (this.context.user === null) return <Redirect to="sign-in" />;
+    const spinnerUnhide = this.state.didSubmit === true
+      ? ''
+      : 'd-none';
+    const submitBtnHide = this.state.didSubmit === false
+      ? ''
+      : 'd-none';
     return (
       <div className='mx-auto width-540'>
         <div className="row">
@@ -110,8 +121,12 @@ class PostForm extends React.Component {
                   name="caption" onChange={this.handleCaptionChange}
                   value={this.state.caption} />
               </div>
-              <div className="mb-3 text-center text-">
-                <button type="submit" className="btn btn-info btn-lg text-white rounded-pill">POST</button>
+              <div className="mb-3 text-center d-flex justify-content-center align-items-center">
+                <button type="submit" className={`btn btn-info btn-lg text-white rounded-pill ${submitBtnHide}`}>POST</button>
+                <button className={`btn btn-info rounded-pill btn-lg d-flex ${spinnerUnhide}`} type="button" disabled>
+                  <span className="spinner-border spinner-border text-white" role="status" aria-hidden="true"></span>
+                  <span className="visually-hidden">Loading...</span>
+                </button>
               </div>
             </form>
           </div>

@@ -14,7 +14,8 @@ class PostDetails extends React.Component {
       post: null,
       isLiked: null,
       comment: '',
-      userComments: []
+      userComments: [],
+      commentSubmit: false
     };
     this.handleLike = this.handleLike.bind(this);
     this.handleCommentChange = this.handleCommentChange.bind(this);
@@ -47,6 +48,9 @@ class PostDetails extends React.Component {
 
   onSubmit(event) {
     event.preventDefault();
+    this.setState({
+      commentSubmit: true
+    });
     fetch('/api/comments', {
       method: 'POST',
       headers: {
@@ -61,9 +65,19 @@ class PostDetails extends React.Component {
       .then(response => response.json())
       .then(data => {
         this.setState({
-          comment: ''
+          comment: '',
+          commentSubmit: false
         });
       })
+      .catch(err => console.error(err));
+
+    fetch(`api/comments/${this.props.postId}`, {
+      headers: {
+        'X-Access-Token': window.localStorage.getItem('bubble-jwt')
+      }
+    })
+      .then(res => res.json())
+      .then(userComments => this.setState({ userComments }))
       .catch(err => console.error(err));
   }
 
@@ -101,12 +115,15 @@ class PostDetails extends React.Component {
   render() {
     if (!this.state.post) return null;
     const { imageUrl, caption, username } = this.state.post;
-    let likeColor;
-    if (this.state.isLiked === true) {
-      likeColor = 'text-info';
-    } else {
-      likeColor = 'text-grey';
-    }
+    const likeColor = this.state.isLiked === true
+      ? 'text-info'
+      : 'text-grey';
+    const spinnerUnhide = this.state.commentSubmit === true
+      ? ''
+      : 'd-none';
+    const submitBtnHide = this.state.commentSubmit === false
+      ? ''
+      : 'd-none';
     return (
      <div className='container content-width'>
         <div className='mt-3 d-flex sticky-top bg-blue'>
@@ -159,7 +176,11 @@ class PostDetails extends React.Component {
                 </div>
                 <div className="modal-footer">
                   <button type="button" className="btn btn-white border border-secondary" data-bs-dismiss="modal">Close</button>
-                  <button type="submit" className="btn btn-info text-white" data-bs-dismiss="modal">POST</button>
+                  <button type="submit" className={`btn btn-info text-white${submitBtnHide}`} data-bs-dismiss="modal">POST</button>
+                  <button className={`btn btn-info rounded-pill btn-lg d-flex ${spinnerUnhide}`} type="button" disabled>
+                    <span className="spinner-border spinner-border text-white" role="status" aria-hidden="true"></span>
+                    <span className="visually-hidden">Loading...</span>
+                  </button>
                 </div>
               </form>
           </div>

@@ -61,7 +61,7 @@ export default class AuthPage extends React.Component {
       ? 'Sign-up to create an account'
       : 'Please sign-in to continue';
     return (
-    <div className="mx-auto content-width">
+    <div className="mx-auto container content-width">
       <div className="row">
         <div className="col d-flex justify-content-center align-items-center mt-3 mb-3">
             <div className="bubble large-bubble d-flex justify-content-center align-items-center">

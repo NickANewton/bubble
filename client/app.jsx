@@ -44,7 +44,7 @@ export default class App extends React.Component {
       return <Feed />;
     }
     if (route.path === 'sign-up' || route.path === 'sign-in') {
-      return <AuthPage />;
+      return <AuthPage key={route.path} />;
     }
     if (route.path === 'create-post') {
       return <PostForm />;

@@ -1,6 +1,7 @@
 import React from 'react';
 import AppContext from '../lib/app-context';
 import Redirect from './redirect';
+import Spinner from './loading-spinner';
 
 class PostForm extends React.Component {
   constructor(props) {
@@ -9,7 +10,7 @@ class PostForm extends React.Component {
       tags: '',
       caption: '',
       file: '',
-      didSubmit: false
+      isLoading: false
     };
     this.fileInputRef = React.createRef();
     this.handleTagsChange = this.handleTagsChange.bind(this);
@@ -43,7 +44,7 @@ class PostForm extends React.Component {
     form.append('caption', this.state.caption);
     form.append('image', this.fileInputRef.current.files[0]);
     this.setState({
-      didSubmit: true
+      isLoading: true
     });
 
     fetch('/api/createPost', {
@@ -59,7 +60,7 @@ class PostForm extends React.Component {
           tags: '',
           caption: '',
           file: '',
-          didSubmit: false
+          isLoading: false
         });
         this.fileInputRef.current.value = null;
         window.location.hash = '';
@@ -69,10 +70,7 @@ class PostForm extends React.Component {
 
   render() {
     if (this.context.user === null) return <Redirect to="sign-in" />;
-    const spinnerUnhide = this.state.didSubmit === true
-      ? ''
-      : 'd-none';
-    const submitBtnHide = this.state.didSubmit === false
+    const submitBtnHide = this.state.isLoading === false
       ? ''
       : 'd-none';
     return (
@@ -123,10 +121,7 @@ class PostForm extends React.Component {
               </div>
               <div className="mb-3 text-center d-flex justify-content-center align-items-center">
                 <button type="submit" className={`btn btn-info btn-lg text-white rounded-pill ${submitBtnHide}`}>POST</button>
-                <button className={`btn btn-info rounded-pill btn-lg d-flex ${spinnerUnhide}`} type="button" disabled>
-                  <span className="spinner-border spinner-border text-white" role="status" aria-hidden="true"></span>
-                  <span className="visually-hidden">Loading...</span>
-                </button>
+                <Spinner isLoading={this.state.isLoading}/>
               </div>
             </form>
           </div>

@@ -1,4 +1,5 @@
 import React from 'react';
+import BtnSpinner from '../components/btn-spinner';
 
 const styles = {
   image: {
@@ -15,7 +16,7 @@ class PostDetails extends React.Component {
       isLiked: null,
       comment: '',
       userComments: [],
-      commentSubmit: false
+      isLoading: false
     };
     this.handleLike = this.handleLike.bind(this);
     this.handleCommentChange = this.handleCommentChange.bind(this);
@@ -49,7 +50,7 @@ class PostDetails extends React.Component {
   onSubmit(event) {
     event.preventDefault();
     this.setState({
-      commentSubmit: true
+      isLoading: true
     });
     fetch('/api/comments', {
       method: 'POST',
@@ -66,7 +67,7 @@ class PostDetails extends React.Component {
       .then(data => {
         this.setState({
           comment: '',
-          commentSubmit: false
+          isLoading: false
         });
       })
       .catch(err => console.error(err));
@@ -118,9 +119,6 @@ class PostDetails extends React.Component {
     const likeColor = this.state.isLiked === true
       ? 'text-info'
       : 'text-grey';
-    const spinnerUnhide = this.state.commentSubmit === true
-      ? ''
-      : 'd-none';
     const submitBtnHide = this.state.commentSubmit === false
       ? ''
       : 'd-none';
@@ -177,10 +175,7 @@ class PostDetails extends React.Component {
                 <div className="modal-footer">
                   <button type="button" className="btn btn-white border border-secondary" data-bs-dismiss="modal">Close</button>
                   <button type="submit" className={`btn btn-info text-white${submitBtnHide}`} data-bs-dismiss="modal">POST</button>
-                  <button className={`btn btn-info rounded-pill btn-lg d-flex ${spinnerUnhide}`} type="button" disabled>
-                    <span className="spinner-border spinner-border text-white" role="status" aria-hidden="true"></span>
-                    <span className="visually-hidden">Loading...</span>
-                  </button>
+                  <BtnSpinner isLoading={this.state.isLoading}/>
                 </div>
               </form>
           </div>

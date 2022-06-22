@@ -1,4 +1,5 @@
 import React from 'react';
+import BtnSpinner from '../components/btn-spinner';
 
 const styles = {
   image: {
@@ -14,7 +15,8 @@ class PostDetails extends React.Component {
       post: null,
       isLiked: null,
       comment: '',
-      userComments: []
+      userComments: [],
+      isLoading: false
     };
     this.handleLike = this.handleLike.bind(this);
     this.handleCommentChange = this.handleCommentChange.bind(this);
@@ -47,6 +49,9 @@ class PostDetails extends React.Component {
 
   onSubmit(event) {
     event.preventDefault();
+    this.setState({
+      isLoading: true
+    });
     fetch('/api/comments', {
       method: 'POST',
       headers: {
@@ -61,9 +66,19 @@ class PostDetails extends React.Component {
       .then(response => response.json())
       .then(data => {
         this.setState({
-          comment: ''
+          comment: '',
+          isLoading: false
         });
       })
+      .catch(err => console.error(err));
+
+    fetch(`api/comments/${this.props.postId}`, {
+      headers: {
+        'X-Access-Token': window.localStorage.getItem('bubble-jwt')
+      }
+    })
+      .then(res => res.json())
+      .then(userComments => this.setState({ userComments }))
       .catch(err => console.error(err));
   }
 
@@ -101,14 +116,14 @@ class PostDetails extends React.Component {
   render() {
     if (!this.state.post) return null;
     const { imageUrl, caption, username } = this.state.post;
-    let likeColor;
-    if (this.state.isLiked === true) {
-      likeColor = 'text-info';
-    } else {
-      likeColor = 'text-grey';
-    }
+    const likeColor = this.state.isLiked === true
+      ? 'text-info'
+      : 'text-grey';
+    const submitBtnHide = this.state.commentSubmit === false
+      ? ''
+      : 'd-none';
     return (
-     <div className='container width-540'>
+     <div className='container content-width'>
         <div className='mt-3 d-flex sticky-top bg-blue'>
         <a href="#" className='text-decoration-none text-info d-flex align-items-center'>
           <i className="fa-solid fa-arrow-left text-info fa-xl me-1"></i>
@@ -159,7 +174,8 @@ class PostDetails extends React.Component {
                 </div>
                 <div className="modal-footer">
                   <button type="button" className="btn btn-white border border-secondary" data-bs-dismiss="modal">Close</button>
-                  <button type="submit" className="btn btn-info text-white" data-bs-dismiss="modal">POST</button>
+                  <button type="submit" className={`btn btn-info text-white${submitBtnHide}`} data-bs-dismiss="modal">POST</button>
+                  <BtnSpinner isLoading={this.state.isLoading}/>
                 </div>
               </form>
           </div>

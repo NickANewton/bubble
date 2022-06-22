@@ -1,6 +1,7 @@
 import React from 'react';
 import AppContext from '../lib/app-context';
 import Redirect from './redirect';
+import BtnSpinner from './btn-spinner';
 
 class PostForm extends React.Component {
   constructor(props) {
@@ -8,7 +9,8 @@ class PostForm extends React.Component {
     this.state = {
       tags: '',
       caption: '',
-      file: ''
+      file: '',
+      isLoading: false
     };
     this.fileInputRef = React.createRef();
     this.handleTagsChange = this.handleTagsChange.bind(this);
@@ -41,6 +43,9 @@ class PostForm extends React.Component {
     form.append('tags', this.state.tags);
     form.append('caption', this.state.caption);
     form.append('image', this.fileInputRef.current.files[0]);
+    this.setState({
+      isLoading: true
+    });
 
     fetch('/api/createPost', {
       method: 'POST',
@@ -54,7 +59,8 @@ class PostForm extends React.Component {
         this.setState({
           tags: '',
           caption: '',
-          file: ''
+          file: '',
+          isLoading: false
         });
         this.fileInputRef.current.value = null;
         window.location.hash = '';
@@ -64,6 +70,9 @@ class PostForm extends React.Component {
 
   render() {
     if (this.context.user === null) return <Redirect to="sign-in" />;
+    const submitBtnHide = this.state.isLoading === false
+      ? ''
+      : 'd-none';
     return (
       <div className='mx-auto width-540'>
         <div className="row">
@@ -110,8 +119,9 @@ class PostForm extends React.Component {
                   name="caption" onChange={this.handleCaptionChange}
                   value={this.state.caption} />
               </div>
-              <div className="mb-3 text-center text-">
-                <button type="submit" className="btn btn-info btn-lg text-white rounded-pill">POST</button>
+              <div className="mb-3 text-center d-flex justify-content-center align-items-center">
+                <button type="submit" className={`btn btn-info btn-lg text-white rounded-pill ${submitBtnHide}`}>POST</button>
+                <BtnSpinner isLoading={this.state.isLoading}/>
               </div>
             </form>
           </div>

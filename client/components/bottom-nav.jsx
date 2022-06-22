@@ -7,7 +7,7 @@ export default class BottomNav extends React.Component {
     const isAuthPage = route.path === 'sign-up' || route.path === 'sign-in'
       ? 'd-none'
       : '';
-    const iconHome = route.path === ''
+    const iconHome = route.path === '' || route.path === 'posts'
       ? 'text-info'
       : 'text-grey';
     const iconPost = route.path === 'create-post'

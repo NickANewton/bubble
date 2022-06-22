@@ -1,14 +1,25 @@
 import React from 'react';
 import AppContext from '../lib/app-context';
 import Redirect from '../components/redirect';
+import BtnSpinner from '../components/btn-spinner';
 
 export default class AuthPage extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      username: '',
-      password: ''
-    };
+  constructor(props, context) {
+    super(props, context);
+    const { route } = this.context;
+    if (route.path === 'sign-in') {
+      this.state = {
+        username: 'DemoUser',
+        password: 'password',
+        isLoading: false
+      };
+    } else {
+      this.state = {
+        username: '',
+        password: '',
+        isLoading: false
+      };
+    }
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
   }
@@ -20,6 +31,9 @@ export default class AuthPage extends React.Component {
 
   handleSubmit(event) {
     event.preventDefault();
+    this.setState({
+      isLoading: true
+    });
     const { route } = this.context;
     const req = {
       method: 'POST',
@@ -40,6 +54,9 @@ export default class AuthPage extends React.Component {
         } else if (result.user && result.token) {
           this.context.handleSignIn(result);
         }
+        this.setState({
+          isLoading: false
+        });
       });
   }
 
@@ -60,8 +77,11 @@ export default class AuthPage extends React.Component {
     const altMessage = route.path === 'sign-up'
       ? 'Sign-up to create an account'
       : 'Please sign-in to continue';
+    const submitBtnHide = this.state.isLoading === false
+      ? ''
+      : 'd-none';
     return (
-    <div className="mx-auto width-540">
+    <div className="mx-auto container content-width">
       <div className="row">
         <div className="col d-flex justify-content-center align-items-center mt-3 mb-3">
             <div className="bubble large-bubble d-flex justify-content-center align-items-center">
@@ -108,9 +128,10 @@ export default class AuthPage extends React.Component {
               <div className="mb-3 text-center">
                 <button
                   type="submit"
-                  className="btn btn-info btn-lg text-white rounded-pill">
+                  className={`btn btn-info btn-lg text-white rounded-pill ${submitBtnHide}`}>
                   {submitBtnText}
                 </button>
+                <BtnSpinner isLoading={this.state.isLoading}/>
               </div>
           </form>
         </div>

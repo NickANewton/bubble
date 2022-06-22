@@ -266,6 +266,7 @@ app.delete('/api/likes', (req, res, next) => {
 });
 
 app.post('/api/comments', (req, res, next) => {
+  const { userId } = req.user;
   const { postId, content } = req.body;
   if (!postId) {
     throw new ClientError(400, 'postId required');
@@ -275,7 +276,7 @@ app.post('/api/comments', (req, res, next) => {
           values ($1, $2, $3)
           returning *
   `;
-  const params = [1, postId, content];
+  const params = [userId, postId, content];
   db.query(sql, params)
     .then(results => res.json(results.rows))
     .catch(err => next(err));
@@ -291,10 +292,12 @@ app.get('/api/comments/:postId', (req, res, next) => {
                 "u"."username",
                 "c"."postId",
                 "c"."content",
-                "c"."commentId"
+                "c"."commentId",
+                "c"."createdAt"
           from "users" as "u"
           join "comments" as "c" using ("userId")
-          where "c"."postId" = $1;
+          where "c"."postId" = $1
+          order by "c"."createdAt" DESC;
   `;
   const params = [postId];
   db.query(sql, params)

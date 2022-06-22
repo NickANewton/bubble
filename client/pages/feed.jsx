@@ -26,7 +26,7 @@ class Feed extends React.Component {
     return (
       <>
         <div className='container'>
-          <ul className='d-flex flex-wrap mt-3 mb-3 list-unstyled justify-content-around width-440 mx-auto'>
+          <ul className='d-flex flex-wrap mt-3 mb-3 list-unstyled justify-content-around content-width mx-auto'>
             {
               this.state.posts.map(posts => {
                 let size;

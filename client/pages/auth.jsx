@@ -4,13 +4,22 @@ import Redirect from '../components/redirect';
 import BtnSpinner from '../components/btn-spinner';
 
 export default class AuthPage extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      username: '',
-      password: '',
-      isLoading: false
-    };
+  constructor(props, context) {
+    super(props, context);
+    const { route } = this.context;
+    if (route.path === 'sign-in') {
+      this.state = {
+        username: 'DemoUser',
+        password: 'password',
+        isLoading: false
+      };
+    } else {
+      this.state = {
+        username: '',
+        password: '',
+        isLoading: false
+      };
+    }
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
   }

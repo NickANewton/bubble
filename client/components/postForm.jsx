@@ -1,7 +1,7 @@
 import React from 'react';
 import AppContext from '../lib/app-context';
 import Redirect from './redirect';
-import Spinner from './loading-spinner';
+import BtnSpinner from './btn-spinner';
 
 class PostForm extends React.Component {
   constructor(props) {
@@ -121,7 +121,7 @@ class PostForm extends React.Component {
               </div>
               <div className="mb-3 text-center d-flex justify-content-center align-items-center">
                 <button type="submit" className={`btn btn-info btn-lg text-white rounded-pill ${submitBtnHide}`}>POST</button>
-                <Spinner isLoading={this.state.isLoading}/>
+                <BtnSpinner isLoading={this.state.isLoading}/>
               </div>
             </form>
           </div>

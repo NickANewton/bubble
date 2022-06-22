@@ -1,11 +1,11 @@
-@media screen and (min-width: 768px) {
+@media screen and (min-width: 455px) {
   .content-width {
-    width: 440px !important;
+    width: 440px;
   }
 }
 
 @media screen and (min-width: 1280px) {
   .content-width {
-    width: 540px !important;
+    width: 560px;
   }
 }

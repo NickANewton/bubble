@@ -69,14 +69,14 @@ export default class AuthPage extends React.Component {
       ? 'SIGN UP'
       : 'SIGN IN';
     const altLinkText = route.path === 'sign-up'
-      ? 'Sign-In'
-      : 'Sign-Up';
+      ? 'Sign In'
+      : 'Sign Up';
     const altHash = route.path === 'sign-up'
       ? '#sign-in'
       : '#sign-up';
     const altMessage = route.path === 'sign-up'
-      ? 'Sign-up to create an account'
-      : 'Please sign-in to continue';
+      ? 'Sign up to create an account'
+      : 'Please sign in to continue';
     const submitBtnHide = this.state.isLoading === false
       ? ''
       : 'd-none';

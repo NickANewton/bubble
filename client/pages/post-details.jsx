@@ -24,21 +24,38 @@ class PostDetails extends React.Component {
   }
 
   handleLike(event) {
-    fetch('/api/likes', {
-      method: 'PUT',
-      headers: {
-        'Content-Type': 'application/json',
-        'X-Access-Token': window.localStorage.getItem('bubble-jwt')
-      },
-      body: JSON.stringify({ postId: this.state.post.postId })
-    })
-      .then(res => res.json())
-      .then(data => {
-        this.setState({
-          isLiked: true
-        });
+    if (this.state.isLiked === false) {
+      fetch('/api/likes', {
+        method: 'PUT',
+        headers: {
+          'Content-Type': 'application/json',
+          'X-Access-Token': window.localStorage.getItem('bubble-jwt')
+        },
+        body: JSON.stringify({ postId: this.state.post.postId })
       })
-      .catch(err => console.error(err));
+        .then(res => res.json())
+        .then(data => {
+          this.setState({
+            isLiked: true
+          });
+        })
+        .catch(err => console.error(err));
+    } else {
+      fetch('/api/likes', {
+        method: 'DELETE',
+        headers: {
+          'Content-Type': 'application/json',
+          'X-Access-Token': window.localStorage.getItem('bubble-jwt')
+        },
+        body: JSON.stringify({ postId: this.state.post.postId })
+      })
+        .then(res => res.json())
+        .then(data => {
+          this.setState({
+            isLiked: false
+          });
+        });
+    }
   }
 
   handleCommentChange(event) {

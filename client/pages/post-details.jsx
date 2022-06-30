@@ -136,9 +136,6 @@ class PostDetails extends React.Component {
     const likeColor = this.state.isLiked === true
       ? 'text-info'
       : 'text-grey';
-    const submitBtnHide = this.state.isLoading === false
-      ? ''
-      : 'd-none';
     return (
      <div className='container content-width'>
         <div className='mt-3 d-flex sticky-top bg-blue'>
@@ -161,6 +158,7 @@ class PostDetails extends React.Component {
         <i className="fa-solid fa-comment fa-xl text-info" data-bs-toggle="modal" data-bs-target="#commentModal"></i>
       </div>
         <div>
+          <BtnSpinner isLoading={this.state.isLoading} />
           {
             this.state.userComments.map(comm => (
                 <div key={comm.commentId} id={comm.commentId} className='post-text-div bg-white mt-3 p-3'>
@@ -191,8 +189,7 @@ class PostDetails extends React.Component {
                 </div>
                 <div className="modal-footer">
                   <button type="button" className="btn btn-white border border-secondary" data-bs-dismiss="modal">Close</button>
-                  <button type="submit" className={`btn btn-info text-white ${submitBtnHide}`} data-bs-dismiss="modal">POST</button>
-                  <BtnSpinner isLoading={this.state.isLoading}/>
+                  <button type="submit" className="btn btn-info text-white" data-bs-dismiss="modal">POST</button>
                 </div>
               </form>
           </div>

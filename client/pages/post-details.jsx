@@ -136,7 +136,7 @@ class PostDetails extends React.Component {
     const likeColor = this.state.isLiked === true
       ? 'text-info'
       : 'text-grey';
-    const submitBtnHide = this.state.commentSubmit === false
+    const submitBtnHide = this.state.isLoading === false
       ? ''
       : 'd-none';
     return (
@@ -191,7 +191,7 @@ class PostDetails extends React.Component {
                 </div>
                 <div className="modal-footer">
                   <button type="button" className="btn btn-white border border-secondary" data-bs-dismiss="modal">Close</button>
-                  <button type="submit" className={`btn btn-info text-white${submitBtnHide}`} data-bs-dismiss="modal">POST</button>
+                  <button type="submit" className={`btn btn-info text-white ${submitBtnHide}`} data-bs-dismiss="modal">POST</button>
                   <BtnSpinner isLoading={this.state.isLoading}/>
                 </div>
               </form>

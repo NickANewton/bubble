@@ -51,7 +51,7 @@ export default class App extends React.Component {
     }
     if (route.path === 'posts') {
       const postId = route.params.get('postId');
-      return <PostDetails postId={postId}/>;
+      return <PostDetails postId={postId} key={postId}/>;
     }
   }
 

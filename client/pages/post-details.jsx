@@ -24,21 +24,38 @@ class PostDetails extends React.Component {
   }
 
   handleLike(event) {
-    fetch('/api/likes', {
-      method: 'PUT',
-      headers: {
-        'Content-Type': 'application/json',
-        'X-Access-Token': window.localStorage.getItem('bubble-jwt')
-      },
-      body: JSON.stringify({ postId: this.state.post.postId })
-    })
-      .then(res => res.json())
-      .then(data => {
-        this.setState({
-          isLiked: true
-        });
+    if (this.state.isLiked === false) {
+      fetch('/api/likes', {
+        method: 'PUT',
+        headers: {
+          'Content-Type': 'application/json',
+          'X-Access-Token': window.localStorage.getItem('bubble-jwt')
+        },
+        body: JSON.stringify({ postId: this.state.post.postId })
       })
-      .catch(err => console.error(err));
+        .then(res => res.json())
+        .then(data => {
+          this.setState({
+            isLiked: true
+          });
+        })
+        .catch(err => console.error(err));
+    } else {
+      fetch('/api/likes', {
+        method: 'DELETE',
+        headers: {
+          'Content-Type': 'application/json',
+          'X-Access-Token': window.localStorage.getItem('bubble-jwt')
+        },
+        body: JSON.stringify({ postId: this.state.post.postId })
+      })
+        .then(res => res.json())
+        .then(data => {
+          this.setState({
+            isLiked: false
+          });
+        });
+    }
   }
 
   handleCommentChange(event) {
@@ -119,7 +136,7 @@ class PostDetails extends React.Component {
     const likeColor = this.state.isLiked === true
       ? 'text-info'
       : 'text-grey';
-    const submitBtnHide = this.state.commentSubmit === false
+    const submitBtnHide = this.state.isLoading === false
       ? ''
       : 'd-none';
     return (
@@ -174,7 +191,7 @@ class PostDetails extends React.Component {
                 </div>
                 <div className="modal-footer">
                   <button type="button" className="btn btn-white border border-secondary" data-bs-dismiss="modal">Close</button>
-                  <button type="submit" className={`btn btn-info text-white${submitBtnHide}`} data-bs-dismiss="modal">POST</button>
+                  <button type="submit" className={`btn btn-info text-white ${submitBtnHide}`} data-bs-dismiss="modal">POST</button>
                   <BtnSpinner isLoading={this.state.isLoading}/>
                 </div>
               </form>

@@ -83,8 +83,7 @@ class PostDetails extends React.Component {
       .then(response => response.json())
       .then(data => {
         this.setState({
-          comment: '',
-          isLoading: false
+          comment: ''
         });
       })
       .catch(err => console.error(err));
@@ -95,7 +94,11 @@ class PostDetails extends React.Component {
       }
     })
       .then(res => res.json())
-      .then(userComments => this.setState({ userComments }))
+      .then(comments => this.setState(
+        {
+          userComments: comments,
+          isLoading: false
+        }))
       .catch(err => console.error(err));
   }
 

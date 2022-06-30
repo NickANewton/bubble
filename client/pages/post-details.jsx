@@ -89,7 +89,7 @@ class PostDetails extends React.Component {
       })
       .catch(err => console.error(err));
 
-    fetch(`api/comments/${this.props.postId}`, {
+    fetch(`/api/comments/${this.props.postId}`, {
       headers: {
         'X-Access-Token': window.localStorage.getItem('bubble-jwt')
       }
@@ -100,7 +100,7 @@ class PostDetails extends React.Component {
   }
 
   componentDidMount() {
-    fetch(`api/posts/${this.props.postId}`, {
+    fetch(`/api/posts/${this.props.postId}`, {
       headers: {
         'X-Access-Token': window.localStorage.getItem('bubble-jwt')
       }
@@ -109,7 +109,7 @@ class PostDetails extends React.Component {
       .then(post => this.setState({ post }))
       .catch(err => console.error(err));
 
-    fetch(`api/likes/${this.props.postId}`, {
+    fetch(`/api/likes/${this.props.postId}`, {
       headers: {
         'X-Access-Token': window.localStorage.getItem('bubble-jwt')
       }
@@ -120,7 +120,7 @@ class PostDetails extends React.Component {
       }))
       .catch(err => console.error(err));
 
-    fetch(`api/comments/${this.props.postId}`, {
+    fetch(`/api/comments/${this.props.postId}`, {
       headers: {
         'X-Access-Token': window.localStorage.getItem('bubble-jwt')
       }

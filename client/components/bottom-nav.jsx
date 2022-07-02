@@ -26,8 +26,8 @@ export default class BottomNav extends React.Component {
               <i className={`fa-solid fa-circle-plus fa-lg ${iconPost}`}></i>
             </a>
           </li>
-          <li className='d-none'>
-            <a className="navbar-item" href="#">
+          <li>
+            <a className="navbar-item" href="#profile">
               <i className="fa-solid fa-user text-grey fa-lg"></i>
             </a>
           </li>

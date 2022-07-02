@@ -9,6 +9,7 @@ import { parseRoute } from './lib';
 import Feed from './pages/feed';
 import PostDetails from './pages/post-details';
 import AuthPage from './pages/auth';
+import Profile from './pages/profile';
 
 export default class App extends React.Component {
   constructor(props) {
@@ -52,6 +53,9 @@ export default class App extends React.Component {
     if (route.path === 'posts') {
       const postId = route.params.get('postId');
       return <PostDetails postId={postId} key={postId}/>;
+    }
+    if (route.path === 'profile') {
+      return <Profile />;
     }
   }
 

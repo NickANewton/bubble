@@ -1,9 +1,11 @@
 import React from 'react';
 import AppContext from '../lib/app-context';
+import Redirect from '../components/redirect';
 
 export default class Profile extends React.Component {
   render() {
     const { user, handleSignOut } = this.context;
+    if (user === null) return <Redirect to="sign-in" />;
     return (
       <div className="mx-auto container content-width">
         <div className="row">
@@ -17,7 +19,7 @@ export default class Profile extends React.Component {
         <div className="row">
           <div className="col">
             <div className="mb-3 text-center d-flex justify-content-center align-items-center">
-              <button onClick={handleSignOut} className="btn btn-info btn-lg text-white rounded-pill">Sign-Out</button>
+              <button onClick={handleSignOut} className="btn btn-info btn-lg text-white rounded-pill">SIGN OUT</button>
             </div>
           </div>
         </div>

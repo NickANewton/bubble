@@ -13,6 +13,9 @@ export default class BottomNav extends React.Component {
     const iconPost = route.path === 'create-post'
       ? 'text-info'
       : 'text-grey';
+    const iconProfile = route.path === 'profile'
+      ? 'text-info'
+      : 'text-grey';
     return (
       <nav className={`navbar bg-white fixed-bottom side-nav ${isAuthPage}`}>
         <ul className='d-flex list-unstyled container-fluid justify-content-around align-items-center desktop-column ul-desktop-height'>
@@ -28,7 +31,7 @@ export default class BottomNav extends React.Component {
           </li>
           <li>
             <a className="navbar-item" href="#profile">
-              <i className="fa-solid fa-user text-grey fa-lg"></i>
+              <i className={`fa-solid fa-user ${iconProfile} fa-lg`}></i>
             </a>
           </li>
         </ul>

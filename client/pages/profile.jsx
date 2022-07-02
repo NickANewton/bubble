@@ -18,7 +18,7 @@ export default class Profile extends React.Component {
         </div>
         <div className="row">
           <div className="col">
-            <div className="mb-3 text-center d-flex justify-content-center align-items-center">
+            <div className="mt-5 text-center d-flex justify-content-center align-items-center">
               <button onClick={handleSignOut} className="btn btn-info btn-lg text-white rounded-pill">SIGN OUT</button>
             </div>
           </div>

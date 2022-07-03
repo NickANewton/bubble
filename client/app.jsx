@@ -10,6 +10,7 @@ import Feed from './pages/feed';
 import PostDetails from './pages/post-details';
 import AuthPage from './pages/auth';
 import Profile from './pages/profile';
+import NotFound from './pages/not-found';
 
 export default class App extends React.Component {
   constructor(props) {
@@ -63,6 +64,7 @@ export default class App extends React.Component {
     if (route.path === 'profile') {
       return <Profile />;
     }
+    return <NotFound />;
   }
 
   render() {

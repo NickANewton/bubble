@@ -2,6 +2,10 @@
   .content-width {
     width: 440px;
   }
+
+  .page-height-desktop {
+    height: 100vh;
+  }
 }
 
 @media screen and (min-width: 1280px) {

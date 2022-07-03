@@ -25,6 +25,10 @@ i {
   width: 18.75rem;
 }
 
+.page-height-mobile {
+  min-height: calc(100vh - 3.5rem);
+}
+
 img {
   height: 6.25rem;
   width: 6.25rem;

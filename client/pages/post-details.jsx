@@ -156,7 +156,7 @@ class PostDetails extends React.Component {
         </div>
         <p>{caption}</p>
       </div>
-      <div className='border-top border-bottom mt-3 p-3 d-flex justify-content-around'>
+      <div className='border-top border-bottom mb-3 mt-3 p-3 d-flex justify-content-around'>
         <i className={`fa-solid fa-heart fa-xl ${likeColor}`} onClick={this.handleLike}></i>
         <i className="fa-solid fa-comment fa-xl text-info" data-bs-toggle="modal" data-bs-target="#commentModal"></i>
       </div>
@@ -164,7 +164,7 @@ class PostDetails extends React.Component {
           <BtnSpinner isLoading={this.state.isLoading} />
           {
             this.state.userComments.map(comm => (
-                <div key={comm.commentId} id={comm.commentId} className='post-text-div bg-white mt-3 p-3'>
+                <div key={comm.commentId} id={comm.commentId} className='post-text-div bg-white mb-3 p-3'>
                   <div>
                     <h5 className='text-info'>{comm.username}</h5>
                   </div>

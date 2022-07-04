@@ -72,15 +72,15 @@ h3 {
   }
 
   .side-nav {
-    top: unset;
-    left: unset;
+    top: 0;
+    left: 0;
     right: unset;
     bottom: unset;
     background-color: #f5fdff !important;
     width: 15vw;
     border-right: 1px solid #cfd4d9;
-    height: auto;
-    position: relative;
+    height: 100vh;
+    position: fixed;
   }
 
   .desktop-column {
@@ -95,10 +95,13 @@ h3 {
   .right-bubbles {
     width: 15vw;
     border-left: 1px solid #cfd4d9;
-    height: auto;
+    height: 100vh;
+    position: fixed;
+    top: 0;
+    right: 0;
   }
 
   .ul-desktop-height {
-    height: 25vh;
+    height: 250px;
   }
 }

@@ -87,19 +87,23 @@ class PostDetails extends React.Component {
         });
       })
       .catch(err => console.error(err));
+  }
 
-    fetch(`/api/comments/${this.props.postId}`, {
-      headers: {
-        'X-Access-Token': window.localStorage.getItem('bubble-jwt')
-      }
-    })
-      .then(res => res.json())
-      .then(comments => this.setState(
-        {
-          userComments: comments,
-          isLoading: false
-        }))
-      .catch(err => console.error(err));
+  componentDidUpdate(prevProps, prevState) {
+    if (this.state.comment !== prevState.comment) {
+      fetch(`/api/comments/${this.props.postId}`, {
+        headers: {
+          'X-Access-Token': window.localStorage.getItem('bubble-jwt')
+        }
+      })
+        .then(res => res.json())
+        .then(comments => this.setState(
+          {
+            userComments: comments,
+            isLoading: false
+          }))
+        .catch(err => console.error(err));
+    }
   }
 
   componentDidMount() {
